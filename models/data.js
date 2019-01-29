@@ -1,4 +1,6 @@
-function loadCSV(filename) {
+var fs = require("fs");
+
+exports.loadCSV =function(filename) {
   var users_file = fs.readFileSync(filename, "utf8");
   //console.log(users_file);
   var rows = users_file.split('\n');
@@ -31,7 +33,7 @@ function loadCSV(filename) {
 }
 
 //uploads the csv containing all the gameplay data (used to update villains.csv and users.csv)
-function upLoadCSV(user_data, file_name) {
+exports.uploadCSV =function(user_data, file_name) {
   var out="";
   user_data.sort(function(a,b) {
     var bPercent = 0;
