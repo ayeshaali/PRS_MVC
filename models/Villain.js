@@ -2,8 +2,26 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var userJS = require(__dirname +'/User');
 
-//calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
+exports.getVillain = function(villain_id) {
+  console.log("Users.getVillain: "+villain_id);
+  var all_villains = dataJS.loadCSV("data/villains.csv");
+  var villain;
+  for(var i=1; i<all_villains.length; i++){
+    if(all_villains[i].name==villain_id.trim()){
+      villain = all_villains[i];
+    }
+  }
+  return villain;
+}
 
+exports.updateVillain = function(villain_id, updated_param, info) {
+  var villain = getVillain(villain_id);
+  villain[updated_param] = info;
+  return villain;
+  }
+}
+
+//calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){
     var rand=Math.random();
     var choice=randomChoice();
@@ -49,8 +67,6 @@ exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCu
             return choice;
     }
 }
-
-//returns the weapon that defeats the input weapon
 exports.winAgainst = function(weapon){
     switch(weapon){
         case "rock":
@@ -63,7 +79,6 @@ exports.winAgainst = function(weapon){
             return "Mjölnir"*/
     }
 }
-
 exports.loseAgainst = function(weapon){
   switch(weapon){
       case "rock":
@@ -74,8 +89,6 @@ exports.loseAgainst = function(weapon){
           return "paper";
   }
 }
-
-
 function randomChoice(){
     var choices=["rock","paper","scissors"];
     return choices[(3*Math.random())|0];
