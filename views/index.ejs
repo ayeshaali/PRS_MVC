@@ -9,13 +9,16 @@
   <% include global/header %>
 
 
-  <div id="feedback">
+  <div id="feedback" class = "negative">
+    <%if (user.failure === 4){%>
+      Wrong Password
+    <%} else {%>Please Log In<%}%>
   </div>
   <div id="enter_name">
     <h2>Welcome to Paper, Rock, Scissors</h2>
     <form action="/login" method="get">
-      Username:<input type="text" id="enter_name_input" name="player_name"><br>
-      Password:<input type="text" id="enter_password_input" name="password">
+      Name:<input type="text" id="enter_name_input" name="player_name"><br>
+      PSWD:<input type="text" id="enter_psw_input" name="pswd">
       <button type="submit" id = "enter_name_button">Submit Name</button>
     </form>
     <a href="/user/new">Create account</a>

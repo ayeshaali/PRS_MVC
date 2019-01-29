@@ -24,6 +24,7 @@ exports.updateUser = function(user_id, new_info) {
 }
 
 exports.createUser = function(user_id, user_password) {
+  
   user_data["games"] =0;
   user_data["total_games"] =0;
   user_data["wins"] =0;
