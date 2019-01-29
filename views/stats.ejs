@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>P,R,S - Stats</title>
+  <link rel="stylesheet" href="styles/style.css">
+ </head>
+<body>
+
+  <% include global/header %>
+
+  <div id="stats">
+    <h2>Stats- ____ games played</h2>
+    <table>
+      <tr>
+        <th class="top_row">Player Name</th>
+        <th class="top_row">Games Played</th>
+        <th class="top_row">Games Won</th>
+        <th class="top_row">Games Lost</th>
+        <th class="top_row">Games Tied</th>
+      </tr>
+      <%for(var i=0; i<users.length;i++){%>
+        <tr>
+          <td>
+          <%=users[i].name%>
+         </td>
+          <td>
+           <%=users[i]["games played"]%>
+          </td>
+          <td>
+          <%=users[i]["games won"]/users[i]["games played"]*100%>%
+         </td>
+         <td>
+         <%=users[i]["games lost"]/users[i]["games played"]*100%>%
+        </td>
+        <td>
+        <%var tie_amount = users[i]["games played"]-(users[i]["games won"]+users[i]["games lost"]);%>
+        <%=tie_amount/users[i]["games played"]*100%>%
+       </td>
+        </tr>
+      <%}%>
+    </table>
+  </div>
+
+  <footer>
+    Brought to you by the cool kids of Software Engineering - Fall, 2018.
+  </footer>
+ </body>
+</html>

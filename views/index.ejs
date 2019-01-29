@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>P,R,S - Index</title>
+  <link rel="stylesheet" href="styles/style.css">
+ </head>
+
+<body>
+  <% include global/header %>
+
+
+  <div id="feedback">
+  </div>
+  <div id="enter_name">
+    <h2>Welcome to Paper, Rock, Scissors</h2>
+    <form action="/login" method="get">
+      Username:<input type="text" id="enter_name_input" name="player_name"><br>
+      Password:<input type="text" id="enter_password_input" name="password">
+      <button type="submit" id = "enter_name_button">Submit Name</button>
+    </form>
+    <a href="/user/new">Create account</a>
+  </div>
+  <footer>
+    Brought to you by the cool kids of Software Engineering - Fall, 2018.
+  </footer>
+  <script src="scripts/scripts.js"></script>
+ </body>
+</html>
