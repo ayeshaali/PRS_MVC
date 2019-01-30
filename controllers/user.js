@@ -7,7 +7,7 @@ var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
 router.get('/Users',function(req,res)){
-    Users.createUser(req.query.user, res.query.pasword);
+    Users.createUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
     res.redirect('/');
 }
 router.get('/user/:id', function(req, res){
