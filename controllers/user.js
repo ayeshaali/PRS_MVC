@@ -10,6 +10,9 @@ router.get('/Users',function(req,res)){
     Users.createUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
     res.redirect('/');
 });
+
+
+//does the actual editing process
 router.get('/user/:id', function(req, res){
     
   Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
@@ -18,6 +21,9 @@ router.get('/user/:id', function(req, res){
   res.render('user_details', {user:u});
 });
 
+
+
+//send you to the "edit" page
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
