@@ -6,12 +6,22 @@ var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
+router.get('/Users',function(req,res)){
+    Users.createUser(req.query.user, res.query.pasword);
+    res.redirect('/');
+}
 router.get('/user/:id', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
+});
+
+router.get('/user/new', function(req, res){
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  res.render('user_details');
 });
 
 //request for throw choice
