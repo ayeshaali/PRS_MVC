@@ -12,7 +12,7 @@
   </div>
   <div id="enter_name">
     <h2>User Details - <%if (user==NULL){%> Create Account <%else{%> <%=user.name%> <%}%></h2>
-    <form action="/" method="get">
+    <form action="/user/:id" method="get">
       Username:<input type="text" id="enter_name_input" name="player_name"><%if {%><%=user.name%><}%><br>
       PSWD:<input type="text" id="enter_psw_input" name="pswd"><%if (user==NULL){%><%=user.pswd%><}%><br>
       First Name:<input type="text" id="enter_name_input" name="first_name"><%if (user==NULL){%><%=user.first_name%><}%><br>
