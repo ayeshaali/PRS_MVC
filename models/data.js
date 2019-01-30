@@ -9,23 +9,25 @@ exports.loadCSV =function(filename) {
       var user_d = rows[i].trim().split(",");
       var user = {};
       if (filename == "data/users.csv") {
-        user["name"] = user_d[0];
-        user["pswd"] = user_d[1];
-        user["total_games"] = parseInt(user_d[2]);
-        user["wins"] = parseInt(user_d[3]);
-        user["losses"] = parseInt(user_d[4]);
-        user["rock"] = parseFloat(user_d[5]);
-        user["paper"] = parseFloat(user_d[6]);
-        user["scissors"] = parseFloat(user_d[7]);
+        user.name = user_d[0];
+        user.pswd = user_d[1];
+        user.total_games = parseInt(user_d[2]);
+        user.wins = parseInt(user_d[3]);
+        user.losses = parseInt(user_d[4]);
+        user.rock = parseFloat(user_d[5]);
+        user.paper = parseFloat(user_d[6]);
+        user.scissors = parseFloat(user_d[7]);
+        user.first_name=user_d[8];
+        user.last_name=user_d[9];
         user_data.push(user);
       } else if (filename == "data/villains.csv") {
-        user["name"] = user_d[0];
-        user["total_games"] = parseInt(user_d[1]);
-        user["wins"] = parseInt(user_d[2]);
-        user["losses"] = parseInt(user_d[3]);
-        user["rock"] = parseFloat(user_d[4]);
-        user["paper"] = parseFloat(user_d[5]);
-        user["scissors"] = parseFloat(user_d[6]);
+        user.name = user_d[0];
+        user.total_games = parseInt(user_d[1]);
+        user.wins = parseInt(user_d[2]);
+        user.losses = parseInt(user_d[3]);
+        user.rock = parseFloat(user_d[4]);
+        user.paper = parseFloat(user_d[5]);
+        user.scissors = parseFloat(user_d[6]);
         user_data.push(user);
       }
   }
