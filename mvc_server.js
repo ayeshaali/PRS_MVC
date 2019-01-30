@@ -16,6 +16,8 @@ var Routes = require(__dirname +'/controllers/user');
 //variables for login and villain strategies
 var villainPrevious=Villains.randomChoice();
 var userPrevious=Villains.randomChoice();
+fs.writeFileSync("data/villainPrevious.txt",villainWeapon,'utf8')
+fs.writeFileSync("data/userPrevious.txt",userPrevious,'utf8')
 var villainWeapon;
 var userName;
 var userPSWD;
@@ -43,6 +45,48 @@ app.get('/', function(request, response){
 });
 
 //login request; renders either index if password is wrong or game if new user created or correct login entered
+app.get('/login', function(request, response){
+  Users.changeColors();
+  //set up data
+  var user_data={
+    name: request.query.player_name, 
+    pswd: request.query.pswd
+  };
+  userName = user_data["name"];
+  userPSWD = user_data["pswd"];
+  var user_obj = Users.getUser(userName);
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  
+  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  } else if (user_obj.name == "test"){ //if user isn't found in CSV
+    Users.createUser(userName, userPSWD);
+    response.render('game', {page:request.url, user:user_data, title:"game"});
+  } else if (user_obj.pswd == userPSWD) {
+    response.render('game', {page:request.url, user:user_data, title:"valid"});
+  } else {
+    user_data["failure"] = 4;
+    userName = "";
+    userPSWD = "";
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  }
+});
+
+//request for when user wants to play again; basically exactly the same as the login request w/o having to log in again
+app.get('/playAgain', function(request, response){
+  //use the saved username and password which resets when you return to login page
+  var user_data={};
+  user_data["name"] = userName;
+  user_data["pswd"] = userPSWD;
+  var csv_data = loadCSV("data/users.csv");
+  //if the saved username is empty than return to index page
+  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  } else {
+    response.render('game', {page:request.url, user:user_data, title:"valid"});
+  } 
+});
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){

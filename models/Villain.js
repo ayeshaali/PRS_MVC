@@ -15,9 +15,9 @@ exports.getVillain = function(villain_id) {
 }
 
 exports.updateVillain = function(villain_id, updated_param, info) {
-  var villain = getVillain(villain_id);
+  var villain = exports.getVillain(villain_id);
   villain[updated_param] = info;
-  updateVillainCSV(villain);
+  exports.updateVillainCSV(villain);
   return villain;
 }
 
@@ -29,13 +29,13 @@ exports.updateVillainCSV = function(updated_villain) {
       break;
     }
   }
-  dataJS.loadCSV(all_villains, "data/villains.csv");
+  dataJS.uploadCSV(all_villains, "data/villains.csv");
   return all_villains;
 }
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){
     var rand=Math.random();
-    var choice=randomChoice();
+    var choice=exports.randomChoice();
     switch(villain){
         case "Bones":
             if (rand>0.5)
