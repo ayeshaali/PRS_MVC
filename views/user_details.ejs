@@ -11,12 +11,12 @@
   <div id="feedback">
   </div>
   <div id="enter_name">
-    <h2>User Details - <%=user.name%></h2>
+    <h2>User Details - <%if (Object.keys(user).length == 0) {%> Create Account <%else{%> <%=user.name%> <%}%></h2>
     <form action="/login" method="get">
-      Username:<input type="text" id="enter_name_input" name="player_name"><br>
-      PSWD:<input type="text" id="enter_psw_input" name="pswd"><br>
-      First Name:<input type="text" id="enter_name_input" name="first_name"><br>
-      Last Name:<input type="text" id="enter_name_input" name="last_name"><br>
+      Username:<input type="text" id="enter_name_input" name="player_name"><%if (Object.keys(user).length != 0){%><%=user.name%><}%><br>
+      PSWD:<input type="text" id="enter_psw_input" name="pswd"><%if (Object.keys(user).length != 0){%><%=user.pswd%><}%><br>
+      First Name:<input type="text" id="enter_name_input" name="first_name"><%if (Object.keys(user).length != 0){%><%=user.first_name%><}%><br>
+      Last Name:<input type="text" id="enter_name_input" name="last_name"><%if (Object.keys(user).length != 0){%><%=user.last_name%><}%><br>
       <button type="submit" id = "enter_name_button">Submit Name</button>
     </form>
   </div>
