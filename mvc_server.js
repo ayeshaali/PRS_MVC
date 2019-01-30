@@ -79,7 +79,7 @@ app.get('/playAgain', function(request, response){
   var user_data={};
   user_data["name"] = userName;
   user_data["pswd"] = userPSWD;
-  var csv_data = loadCSV("data/users.csv");
+  var csv_data = dataJS.loadCSV("data/users.csv");
   //if the saved username is empty than return to index page
   if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
     response.render('index', {page:request.url, user:user_data, title:"Index"});
@@ -98,8 +98,8 @@ app.get('/rules', function(request, response){
 
 //handles a request for the rules page (inputs the necessary data and sends the user to the newly rendered stats page)
 app.get('/stats', function(request, response){
-  var user_data = loadCSV("data/users.csv");
-  var villain_data = loadCSV("data/villains.csv")
+  var user_data = dataJS.loadCSV("data/users.csv");
+  var villain_data = dataJS.loadCSV("data/villains.csv")
   var data = {};
   data["player"] = user_data;
   data["villain"] = villain_data
