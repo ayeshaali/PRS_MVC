@@ -11,6 +11,14 @@ router.get('/Users',function(req,res)){
     res.redirect('/');
 }
 router.get('/user/:id', function(req, res){
+    
+  Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  res.render('user_details', {user:u});
+});
+
+router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
   res.status(200);
