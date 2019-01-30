@@ -2,7 +2,6 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var villainJS = require(__dirname +'/Villain');
 
-
 exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);
   var user = createBlankUser();
@@ -52,7 +51,7 @@ exports.updateUser = function(user_id, new_info) {
   return user;
 }
 
-exports.handleThrow = function(userWeapon, villain, villainPrevious, userPrevious){
+exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
     villainWeapon=villainJS.villainStrategies(villain,villainPrevious,userPrevious,userWeapon);
     switch(userWeapon){
         case villainWeapon:
@@ -62,6 +61,39 @@ exports.handleThrow = function(userWeapon, villain, villainPrevious, userPreviou
         case villainJS.loseAgainst(villainWeapon):
             return("lost");
     }
+}
+
+exports.changeColors = function(){
+  var svgNames=["the_boss","the_magician","harry","gato","bones","manny","comic_hans","mickey","pixie","regal","spock","mr_modern"];
+  var colors=["red","blue","green","white","olive","yellow","orange","purple", "navy", "gray", "fuchsia", "lime"];
+  var svgExtensions=["_waiting","_rock","_scissors","_paper"];
+  var tempColors=colors.slice(0);
+  for (var k=0;k<svgNames.length;k++){
+    var index =Math.floor(Math.random()*tempColors.length);
+    chosenColor=tempColors[index];
+    for (var j=0; j<svgExtensions.length;j++){
+      svgName=__dirname+"/public/images/"+svgNames[k]+svgExtensions[j]+".svg";
+      if(!svgName.includes("regal_waiting")){
+        var svgToEdit=fs.readFileSync(svgName, "utf8");
+        var out=svgToEdit.split("fill");
+        var output=out[0];
+        for(var i=1;i<out.length;i++){
+          output+="fill:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
+        }
+        fs.writeFileSync(svgName,output, "utf8");
+      } else {
+        var svgToEdit=fs.readFileSync(svgName, "utf8");
+        var out=svgToEdit.split("stroke:");
+        var output=out[0];
+        //console.log(out);
+        for(var i=1;i<out.length;i++){
+          output+="stroke:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
+        }
+        fs.writeFileSync(svgName,output, "utf8");
+      }
+    }
+    tempColors.splice(index,1)
+  }
 }
 
 var createBlankUser= function(){
