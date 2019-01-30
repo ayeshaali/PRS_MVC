@@ -60,9 +60,6 @@ app.get('/login', function(request, response){
   
   if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
     response.render('index', {page:request.url, user:user_data, title:"Index"});
-  } else if (user_obj.name == "test"){ //if user isn't found in CSV
-    Users.createUser(userName, userPSWD);
-    response.render('game', {page:request.url, user:user_data, title:"game"});
   } else if (user_obj.pswd == userPSWD) {
     response.render('game', {page:request.url, user:user_data, title:"valid"});
   } else {
