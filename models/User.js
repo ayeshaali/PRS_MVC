@@ -14,18 +14,20 @@ exports.getUser = function(user_id) {
   return user;
 }
 
-exports.createUser = function(user_id, user_password) {
+exports.createUser = function(user_id, user_password,first_name,last_name) {
   var all_users = dataJS.loadCSV("data/users.csv");
   var user_data = {}
-  user_data["name"] = user_id;
-  user_data["pswd"] = user_password;
-  user_data["games"] =0;
-  user_data["total_games"] =0;
-  user_data["wins"] =0;
-  user_data["losses"] =0;
-  user_data["rock"] =0;
-  user_data["paper"] =0;
-  user_data["scissors"] = 0;
+  user_data.name = user_id;
+  user_data.pswd = user_password;
+  user_data.games =0;
+  user_data.total_games =0;
+  user_data.wins =0;
+  user_data.losses =0;
+  user_data.rock =0;
+  user_data.paper =0;
+  user_data.scissors = 0;
+  user_data.first_name=first_name;
+  user_data.last_name=last_name;
   all_users.push(user_data);
   dataJS.uploadCSV(all_users, "data/users.csv");
 } 
