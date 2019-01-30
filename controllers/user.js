@@ -19,9 +19,10 @@ router.get('/user/:id', function(req, res){
 });
 
 router.get('/user/new', function(req, res){
+  var u = {};
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
-  res.render('user_details');
+  res.render('user_details', {user:u});
 });
 
 //request for throw choice
