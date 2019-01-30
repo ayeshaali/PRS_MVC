@@ -60,7 +60,9 @@ exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevio
             return("won");
         case villainJS.loseAgainst(villainWeapon):
             return("lost");
-    }
+    }  
+    fs.writeFileSync("data/villainPrevious.txt",villainWeapon,'utf8')
+    fs.writeFileSync("data/userPrevious.txt",userWeapon,'utf8')
 }
 
 exports.changeColors = function(){
@@ -72,7 +74,7 @@ exports.changeColors = function(){
     var index =Math.floor(Math.random()*tempColors.length);
     chosenColor=tempColors[index];
     for (var j=0; j<svgExtensions.length;j++){
-      svgName=__dirname+"/public/images/"+svgNames[k]+svgExtensions[j]+".svg";
+      svgName="./public/images/"+svgNames[k]+svgExtensions[j]+".svg";
       if(!svgName.includes("regal_waiting")){
         var svgToEdit=fs.readFileSync(svgName, "utf8");
         var out=svgToEdit.split("fill");

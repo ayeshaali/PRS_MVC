@@ -19,7 +19,6 @@ exports.updateVillain = function(villain_id, updated_param, info) {
   villain[updated_param] = info;
   updateVillainCSV(villain);
   return villain;
-  }
 }
 
 exports.updateVillainCSV = function(updated_villain) {
@@ -101,7 +100,7 @@ exports.loseAgainst = function(weapon){
           return "paper";
   }
 }
-function randomChoice(){
+exports.randomChoice = function(){
     var choices=["rock","paper","scissors"];
     return choices[(3*Math.random())|0];
 }

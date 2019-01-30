@@ -9,10 +9,13 @@ var favicon = require('serve-favicon');
 var app = express();
 app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
+var Villains = require(__dirname +'/models/Villain');
+var dataJS = require(__dirname +'/models/data');
+var Routes = require(__dirname +'/controllers/user');
 
 //variables for login and villain strategies
-var villainPrevious=randomChoice();
-var userPrevious=randomChoice();
+var villainPrevious=Villains.randomChoice();
+var userPrevious=Villains.randomChoice();
 var villainWeapon;
 var userName;
 var userPSWD;
@@ -69,33 +72,4 @@ app.get('/about', function(request, response){
   response.render('about', {page:request.url, user:user_data, title:"about"});
 });
 
-//checks to see if a user's login information correspond to an actual user
-function findUser(user_data,csv_data,request,response, titleN){
-    for (var i = 0; i < csv_data.length; i++) {
-    if (csv_data[i].name == user_data["name"]) {
-      if (csv_data[i].pswd == user_data["pswd"]) {
-        response.status(200);
-        response.setHeader('Content-Type', 'text/html')
-        if (error) {
-          error = false;
-          response.render('game', {page:request.url, user:user_data, title:"valid"});
-        } else {
-          response.render('game', {page:request.url, user:user_data, title:titleN});
-        }
-        
-        return true;
-        break;
-      } else {
-        user_data["failure"] = 4;
-        userName = "";
-        userPSWD = "";
-        response.status(200);
-        response.setHeader('Content-Type', 'text/html')
-        response.render('index', {page:request.url, user:user_data, title:"Index"});
-        return true;
-        break;
-      }
-    }
-  }
-    return false;
-}
+app.route(Routes);

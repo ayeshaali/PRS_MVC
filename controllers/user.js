@@ -5,7 +5,6 @@ var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
-
 router.get('/user/:id', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
@@ -17,26 +16,28 @@ router.get('/user/:id', function(req, res){
 router.get('/login', function(request, response){
   Users.changeColors();
   //set up data
-  var user_data={};
-  user_data["name"] = request.query.player_name;
-  user_data["pswd"] = request.query.pswd;
+  var user_data={
+    name: request.query.player_name, 
+    pswd: request.query.pswd
+  };
   userName = user_data["name"];
   userPSWD = user_data["pswd"];
-  //manage users in CSV
-  var csv_data = DataJS.loadCSV("data/users.csv");
-  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('index', {page:request.url, user:user_data, title:"Index"});
-  }
-  
-  if (!findUser(user_data,csv_data,request,response, "logged in")){ //if user isn't found in CSV
-  newUser(user_data); //create new user
-  csv_data.push(user_data);
-  upLoadCSV(csv_data, "data/users.csv");
+  var user_obj = Users.getUser(userName);
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
-  response.render('game', {page:request.url, user:user_data, title:"game"});
+  
+  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  } else if (user_obj.name == "test"){ //if user isn't found in CSV
+    Users.createUser(userName, userPSWD);
+    response.render('game', {page:request.url, user:user_data, title:"game"});
+  } else if (user_obj.pswd == userPSWD) {
+    response.render('game', {page:request.url, user:user_data, title:"valid"});
+  } else {
+    user_data["failure"] = 4;
+    userName = "";
+    userPSWD = "";
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
   }
 });
 
@@ -56,14 +57,11 @@ router.get('/:user/results', function(request, response){
   }
   
   if (user_data.weapon=="error"||user_data.villain=="error"){
-    error = true;
     return response.redirect('/playAgain');
   } else{
     var villainWeapon= "";
     user_data["result"] = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
     user_data["response"] =villainWeapon;
-    fs.writeFileSync("data/villainPrevious.txt",villainWeapon,'utf8')
-    fs.writeFileSync("data/userPrevious.txt",user_data.weapon,'utf8')
     
     var user_obj = Users.getUser(user_data.name);
     Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1);
@@ -94,32 +92,23 @@ router.get('/:user/results', function(request, response){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     response.render('results',{page:request.url, user:user_data, title:"results"});
-  });
-  
-  //request for when user wants to play again; basically exactly the same as the login request w/o having to log in again
-  router.get('/playAgain', function(request, response){
-    //use the saved username and password which resets when you return to login page
-    var user_data={};
-    user_data["name"] = userName;
-    user_data["pswd"] = userPSWD;
-    var csv_data = loadCSV("data/users.csv");
-    //if the saved username is empty than return to index page
-    if (user_data["name"] == "") {
-      response.status(200);
-      response.setHeader('Content-Type', 'text/html')
-      response.render('index', {page:request.url, user:user_data, title:"Index"});
-    }
-    
-    if (!findUser(user_data,csv_data,request,response, "playGame")){
-      newUser(user_data);
-      csv_data.push(user_data);
-      upLoadCSV(csv_data, "data/users.csv");
-      response.status(200);
-      response.setHeader('Content-Type', 'text/html')
-      response.render('game', {page:request.url, user:user_data, title:"playGame"});
-    }
-  });
-  
-  
-  
-  module.exports = router;
+  }
+});
+
+//request for when user wants to play again; basically exactly the same as the login request w/o having to log in again
+router.get('/playAgain', function(request, response){
+  //use the saved username and password which resets when you return to login page
+  var user_data={};
+  user_data["name"] = userName;
+  user_data["pswd"] = userPSWD;
+  var csv_data = loadCSV("data/users.csv");
+  //if the saved username is empty than return to index page
+  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  } else {
+    response.render('game', {page:request.url, user:user_data, title:"valid"});
+  } 
+});
+
+
+module.exports = router;
