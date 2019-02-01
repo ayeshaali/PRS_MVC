@@ -14,7 +14,7 @@ router.get('/Users',function(req,res){
 
 //does the actual editing process
 router.get('/user/:id', function(req, res){
-  
+  //put in user stuff to make ejs work
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
