@@ -11,12 +11,12 @@
   <div id="feedback">
   </div>
   <div id="enter_name">
-    <h2>User Details - <%if (user==NULL){%> Create Account <%else{%> <%=user.name%> <%}%></h2>
+    <h2>User Details - <%if (user==null){%> Create Account <%} else{%> <%=user.name%> <%}%></h2>
     <form action="/user/<%user.name%>" method="post">
-      Username:<input type="text" id="enter_name_input" name="player_name"><%if (user!=NULL){%><%=user.name%><}%><br>
-      PSWD:<input type="text" id="enter_psw_input" name="pswd"><%if (user!=NULL){%><%=user.pswd%><}%><br>
-      First Name:<input type="text" id="enter_name_input" name="first_name"><%if (user!=NULL){%><%=user.first_name%><}%><br>
-      Last Name:<input type="text" id="enter_name_input" name="last_name"><%if (user!=NULL){%><%=user.last_name%><}%><br>
+      Username:<input type="text" id="enter_name_input" name="player_name"><%if (user!=null){%><%=user.name%><%} else {%> <%}%><br>
+      PSWD:<input type="text" id="enter_psw_input" name="pswd"><%if (user!=null){%><%=user.pswd%><%}%><br>
+      First Name:<input type="text" id="enter_name_input" name="first_name"><%if (user!=null){%><%=user.first_name%><%}%><br>
+      Last Name:<input type="text" id="enter_name_input" name="last_name"><%if (user!=null){%><%=user.last_name%><%}%><br>
       <button type="submit" id = "enter_name_button">Submit Name</button>
     </form>
     
