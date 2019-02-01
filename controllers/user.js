@@ -7,31 +7,27 @@ var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
 router.get('/Users',function(req,res){
-    Users.createUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
-    res.redirect('/');
-});
-
-
-//does the actual editing process
-router.get('/user/:id', function(req, res){
-  //put in user stuff to make ejs work
-  var u = {};
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
-});
-
-router.post('/user/:id', function(req, res){
   var u = {
     name: req.body.player_name,
     pswd: req.body.pswd,
     first_name: req.body.first_name,
     last_name: req.body.last_name
   }
-  Users.updateUser(u.name, u.pswd, u.first_name,u.last_name);
+  Users.createUser(u.name, u.pswd, u.first_name,u.last_name)
+  res.redirect('/');
+});
+
+//does the actual editing process
+router.get('/user/:id', function(req, res){
+  //put in user stuff to make ejs work
+  var u = Users.getUser(req.params.id);
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
+});
+
+router.post('/user/:id', function(req, res){
+
 });
 
 
