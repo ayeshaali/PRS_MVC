@@ -13,6 +13,8 @@ var Villains = require(__dirname +'/models/Villain');
 var dataJS = require(__dirname +'/models/data');
 var Routes = require(__dirname +'/controllers/user');
 
+app.use(express.urlencoded());
+
 //variables for login and villain strategies
 var villainPrevious=Villains.randomChoice();
 var userPrevious=Villains.randomChoice();

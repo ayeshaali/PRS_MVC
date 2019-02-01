@@ -6,37 +6,36 @@ var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
-router.get('/Users',function(req,res)){
+router.get('/Users',function(req,res){
     Users.createUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
     res.redirect('/');
 });
 
-<<<<<<< HEAD
-=======
 
 //does the actual editing process
->>>>>>> 42abe6a173af5455dac9d1bee5ff496cd0c6f9ea
 router.get('/user/:id', function(req, res){
-  Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
+  var u = {
+    name: " "
+  };
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
 });
 
-<<<<<<< HEAD
 router.post('/user/:id', function(req, res){
-  Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
+  var u = {
+    name: req.body.player_name,
+    pswd: req.body.pswd,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name
+  }
+  Users.updateUser(u.name, u.pswd, u.first_name,u.last_name);
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
 });
 
 
-=======
-
-
-//send you to the "edit" page
->>>>>>> 42abe6a173af5455dac9d1bee5ff496cd0c6f9ea
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
