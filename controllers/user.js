@@ -11,6 +11,11 @@ router.get('/Users',function(req,res)){
     res.redirect('/');
 });
 
+<<<<<<< HEAD
+=======
+
+//does the actual editing process
+>>>>>>> 42abe6a173af5455dac9d1bee5ff496cd0c6f9ea
 router.get('/user/:id', function(req, res){
   Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
   res.status(200);
@@ -18,6 +23,7 @@ router.get('/user/:id', function(req, res){
   res.render('user_details', {user:u});
 });
 
+<<<<<<< HEAD
 router.post('/user/:id', function(req, res){
   Users.updateUser(req.query.player_name, req.query.pswd, req.query.first_name,req.query.last_name);
   res.status(200);
@@ -26,6 +32,11 @@ router.post('/user/:id', function(req, res){
 });
 
 
+=======
+
+
+//send you to the "edit" page
+>>>>>>> 42abe6a173af5455dac9d1bee5ff496cd0c6f9ea
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
