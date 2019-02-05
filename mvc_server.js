@@ -12,6 +12,9 @@ var Users = require(__dirname +'/models/User');
 var Villains = require(__dirname +'/models/Villain');
 var dataJS = require(__dirname +'/models/data');
 var Routes = require(__dirname +'/controllers/user');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //variables for login and villain strategies

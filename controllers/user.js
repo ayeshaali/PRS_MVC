@@ -7,6 +7,7 @@ var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
 router.post('/Users',function(req,res){
+  console.log(req.body);
   var u = {
     name: req.player_name,
     pswd: req.pswd,
