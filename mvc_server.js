@@ -7,15 +7,20 @@ var express = require('express');
 var fs = require('fs');
 var favicon = require('serve-favicon');
 var app = express();
-app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
 var Villains = require(__dirname +'/models/Villain');
 var dataJS = require(__dirname +'/models/data');
 var Routes = require(__dirname +'/controllers/user');
 var bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+//set up server
+app.use(express.static('public'));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(favicon(__dirname + '/public/images/logo.png'));
+app.use(express.urlencoded());
 
+app.use(require('./controllers/user'));
 
 //variables for login and villain strategies
 var villainPrevious=Villains.randomChoice();
@@ -26,12 +31,6 @@ var villainWeapon;
 var userName;
 var userPSWD;
 var error = false;
-
-//set up server
-app.use(express.static('public'));
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(favicon(__dirname + '/public/images/logo.png'));
 
 var port = process.env.PORT || 3000;
 app.listen(port, function(){
@@ -103,7 +102,8 @@ app.get('/stats', function(request, response){
   var villain_data = dataJS.loadCSV("data/villains.csv")
   var data = {};
   data["player"] = user_data;
-  data["villain"] = villain_data
+  data["villain"] = villain_data;
+  console.log(user_data);
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('stats', {page:request.url, user:data, title:"stats"});
@@ -116,5 +116,3 @@ app.get('/about', function(request, response){
   response.setHeader('Content-Type', 'text/html')
   response.render('about', {page:request.url, user:user_data, title:"about"});
 });
-
-app.route(Routes);

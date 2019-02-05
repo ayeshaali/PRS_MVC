@@ -7,12 +7,12 @@ var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
 router.post('/Users',function(req,res){
-  console.log(req.body);
+  console.log('POST Request- /Users');
   var u = {
-    name: req.player_name,
-    pswd: req.pswd,
-    first_name: req.first_name,
-    last_name: req.last_name
+    name: req.body.player_name,
+    pswd: req.body.pswd,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name
   }
   Users.createUser(u.name, u.pswd, u.first_name,u.last_name)
   res.redirect('/');
