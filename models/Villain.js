@@ -78,7 +78,7 @@ exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCu
             return choice;
     }
 }
-exports.winAgainst = function(weapon){
+function winAgainst(weapon){
     switch(weapon){
         case "rock":
             return "paper";
@@ -90,7 +90,7 @@ exports.winAgainst = function(weapon){
             return "Mjölnir"*/
     }
 }
-exports.loseAgainst = function(weapon){
+function loseAgainst(weapon){
   switch(weapon){
       case "rock":
           return "scissors";
@@ -100,7 +100,17 @@ exports.loseAgainst = function(weapon){
           return "paper";
   }
 }
-exports.randomChoice = function(){
+function randomChoice(){
     var choices=["rock","paper","scissors"];
     return choices[(3*Math.random())|0];
+}
+
+exports.winAgainst = function(weapon){
+    return winAgainst(weapon);
+}
+exports.loseAgainst = function(weapon){
+  return loseAgainst(weapon);
+}
+exports.randomChoice = function(){
+    return randomChoice();
 }
