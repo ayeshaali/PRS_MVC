@@ -6,6 +6,16 @@ var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
+
+router.delete('/user', function (req, res) {
+  console.log('DELETE Request-');
+})
+
+router.put('/user', function (req, res) {
+  console.log('PUT Request-');
+})
+
+
 router.post('/Users',function(req,res){
   console.log('POST Request- /Users');
   var u = {
@@ -63,7 +73,9 @@ router.get('/:user/results', function(request, response){
   } else{
     var villainWeapon= "";
     user_data["result"] = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
+    
     user_data["response"] =villainWeapon;
+    console.log("show please "+user_data.response);
     
     var user_obj = Users.getUser(user_data.name);
     Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1);

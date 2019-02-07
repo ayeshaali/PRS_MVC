@@ -12,6 +12,9 @@ var Villains = require(__dirname +'/models/Villain');
 var dataJS = require(__dirname +'/models/data');
 var Routes = require(__dirname +'/controllers/user');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 
 //set up server
 app.use(express.static('public'));
