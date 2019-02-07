@@ -52,7 +52,7 @@ exports.updateUser = function(user_id, updated_param, new_info) {
 }
 
 exports.updateUserCSV = function(updated_user) {
-  var all_users = dataJS.loadCSV("data/villains.csv");
+  var all_users = dataJS.loadCSV("data/users.csv");
   for(var i=0; i<all_users.length; i++){
     if(all_users[i].name==updated_user.name) {
       all_users[i] = updated_user;
