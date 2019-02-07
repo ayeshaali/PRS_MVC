@@ -6,7 +6,7 @@ exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);
   var user = createBlankUser();
   var all_users = dataJS.loadCSV("data/users.csv");
-  for(var i=1; i<all_users.length; i++){
+  for(var i=0; i<all_users.length; i++){
     if(all_users[i].name==user_id.trim()){
       user = all_users[i];
     }
@@ -30,7 +30,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name) {
   user_data.last_name=last_name;
   all_users.push(user_data);
   dataJS.uploadCSV(all_users, "data/users.csv");
-} 
+}
 
 exports.deleteUser = function(user_id) {
   var all_users = dataJS.loadCSV("data/users.csv");
@@ -44,25 +44,42 @@ exports.deleteUser = function(user_id) {
   dataJS.uploadCSV(all_users, "data/users.csv");
 }
 
-exports.updateUser = function(user_id, new_info) {
-  console.log("Users.getUser");
-  var user={
-    name:"test"
-  };
-
+exports.updateUser = function(user_id, updated_param, new_info) {
+  var user = exports.getUser(user_id);
+  user[updated_param] = new_info;
+  exports.updateUserCSV(user);
   return user;
+}
+
+exports.updateUserCSV = function(updated_user) {
+  var all_users = dataJS.loadCSV("data/villains.csv");
+  for(var i=0; i<all_users.length; i++){
+    if(all_users[i].name==updated_user.name) {
+      all_users[i] = updated_user;
+      break;
+    }
+  }
+  dataJS.uploadCSV(all_users, "data/users.csv");
+  return all_users;
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
     villainWeapon=villainJS.villainStrategies(villain,villainPrevious,userPrevious,userWeapon);
+    var result = [];
     switch(userWeapon){
         case villainWeapon:
-          return("drew");
+          result[0] = "drew";
+          break;
         case villainJS.winAgainst(villainWeapon):
-            return("won");
+          result[0] = "won";
+          break;
         case villainJS.loseAgainst(villainWeapon):
-            return("lost");
-    }  
+          result[0] = "lost";
+          break;
+    }
+    
+    result[1]=villainWeapon;
+    return result;
     fs.writeFileSync("data/villainPrevious.txt",villainWeapon,'utf8')
     fs.writeFileSync("data/userPrevious.txt",userWeapon,'utf8')
 }

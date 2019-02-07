@@ -27,11 +27,6 @@ router.get('/user/:id', function(req, res){
   res.render('user_details', {user:u});
 });
 
-router.post('/user/:id', function(req, res){
-
-});
-
-
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var u = Users.getUser(req.params.id);
@@ -62,8 +57,9 @@ router.get('/:user/results', function(request, response){
     return response.redirect('/playAgain');
   } else{
     var villainWeapon= "";
-    user_data["result"] = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
-    user_data["response"] =villainWeapon;
+    var arr = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
+    user_data["result"] = arr[0];
+    user_data["response"] =arr[1];
     
     var user_obj = Users.getUser(user_data.name);
     Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1);
@@ -89,7 +85,7 @@ router.get('/:user/results', function(request, response){
       Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);        
       break;
     }
-    
+    console.log(user_data);
     //render results
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
