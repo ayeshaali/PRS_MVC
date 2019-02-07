@@ -6,6 +6,16 @@ var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
+
+router.delete('/user', function (req, res) {
+  console.log('DELETE Request-');
+})
+
+router.put('/user', function (req, res) {
+  console.log('PUT Request-');
+})
+
+
 router.post('/Users',function(req,res){
   console.log('POST Request- /Users');
   var u = {
