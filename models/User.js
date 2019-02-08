@@ -60,6 +60,7 @@ exports.changeUserId = function(user_id, new_id){
         if(all_users[i].name==new_id) {
             return false;
         }
+    }
     for(var i=0; i<all_users.length; i++){
         if(all_users[i].name==user_id) {
             all_users[i].name=new_id;
