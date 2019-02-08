@@ -75,7 +75,7 @@ div {
 #playAgain {
   margin-top: 1em;
 }
-#show_rules_button, #show_stats_button, #show_about_button, #log_out, #play_again {
+#show_rules_button, #show_stats_button, #show_about_button, #log_out, #play_again, #update {
   text-decoration: none;
   position: relative;
   left: -5px;

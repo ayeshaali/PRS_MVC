@@ -5,6 +5,13 @@
       Log Out
       </button>
     </form>
+    <%if(title != "Details") {%>
+      <form action="/users/:<%user.name%>/edit_method=PUT" method="post">
+        <button type="submit" id = "update">
+        Update Account
+        </button>
+      </form>
+    <%}%>
   <%}%>
   <p>Brought to you by Sadi Gulcelik and Ayesha Ali - Fall, 2018.</p>
 </footer>
