@@ -51,7 +51,7 @@ exports.updateUser = function(user_id, updated_param, new_info) {
   return user;
 }
 
-exports.changeUserId(user_id, new_id){
+exports.changeUserId = function(user_id, new_id){
   if (user_id==new_id){
     return true;
   }
