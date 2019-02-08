@@ -11,12 +11,12 @@ router.delete('/user', function (req, res) {
   console.log('DELETE Request-');
 })
 
-router.put('/user', function (req, res) {
+router.put('/user/:id', function (req, res) {
   console.log('PUT Request-');
 })
 
 
-router.post('/Users',function(req,res){
+router.post('/user/:id',function(req,res){
   console.log('POST Request- /Users');
   var u = {
     name: req.body.player_name,
@@ -26,15 +26,6 @@ router.post('/Users',function(req,res){
   }
   Users.createUser(u.name, u.pswd, u.first_name,u.last_name)
   res.redirect('/');
-});
-
-//does the actual editing process
-router.get('/user/:id', function(req, res){
-  //put in user stuff to make ejs work
-  var u = Users.getUser(req.params.id);
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
 });
 
 router.get('/user/:id/edit', function(req, res){
