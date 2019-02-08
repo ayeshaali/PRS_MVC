@@ -52,6 +52,9 @@ exports.updateUser = function(user_id, updated_param, new_info) {
 }
 
 exports.changeUserId(user_id, new_id){
+  if (user_id==new_id){
+    return true;
+  }
     var all_users = dataJS.loadCSV("data/users.csv");
     for(var i=0; i<all_users.length; i++){
         if(all_users[i].name==new_id) {
@@ -60,6 +63,7 @@ exports.changeUserId(user_id, new_id){
     for(var i=0; i<all_users.length; i++){
         if(all_users[i].name==user_id) {
             all_users[i].name=new_id;
+            return true;
         }
   }
   dataJS.uploadCSV(all_users, "data/users.csv");
