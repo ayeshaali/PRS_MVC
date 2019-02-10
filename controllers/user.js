@@ -1,20 +1,16 @@
 var express = require('express');
 var fs = require("fs");
 var router = express.Router();
-
 var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
-
-router.delete('/user', function (req, res) {
-  console.log('DELETE Request-');
-})
-
-router.put('/user/:id', function (req, res) {
-  console.log('PUT Request-');
-})
-
+router.get('/user/new', function(req, res){
+  var u = {};
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  res.render('user_details', {user:u});
+});
 
 router.post('/user/:id',function(req,res){
   console.log('POST Request- /Users');
@@ -36,14 +32,14 @@ router.get('/user/:id/edit', function(req, res){
   res.render('user_details', {user:u});
 });
 
-router.get('/user/new', function(req, res){
-  var u = {};
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
-});
+router.delete('/user', function (req, res) {
+  console.log('DELETE Request-');
+})
 
-//request for throw choice
+router.put('/user/:id', function (req, res) {
+  console.log('PUT Request-');
+})
+
 router.get('/:user/results', function(request, response){
   var user_data={
     name: request.params.user,
@@ -93,7 +89,5 @@ router.get('/:user/results', function(request, response){
     response.render('results',{page:request.url, user:user_data, title:"results"});
   }
 });
-
-
 
 module.exports = router;

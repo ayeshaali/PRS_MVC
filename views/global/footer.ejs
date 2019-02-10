@@ -6,7 +6,7 @@
       </button>
     </form>
     <%if(title != "Details") {%>
-      <form action="/users/:<%user.name%>/edit_method=PUT" method="post">
+      <form action="/users/<%=user.name%>/edit" method="get">
         <button type="submit" id = "update">
         Update Account
         </button>
