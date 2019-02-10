@@ -6,7 +6,7 @@ exports.getVillain = function(villain_id) {
   console.log("Users.getVillain: "+villain_id);
   var all_villains = dataJS.loadCSV("data/villains.csv");
   var villain;
-  for(var i=1; i<all_villains.length; i++){
+  for(var i=0; i<all_villains.length; i++){
     if(all_villains[i].name==villain_id.trim()){
       villain = all_villains[i];
     }

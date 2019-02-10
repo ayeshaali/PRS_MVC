@@ -6,13 +6,13 @@ var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
 
 router.get('/user/new', function(req, res){
-  var u = {};
+  var u;
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
 });
 
-router.post('/user/:id',function(req,res){
+router.post('/users',function(req,res){
   console.log('POST Request- /Users');
   var u = {
     name: req.body.player_name,
@@ -37,7 +37,15 @@ router.delete('/user', function (req, res) {
 })
 
 router.put('/user/:id', function (req, res) {
-  console.log('PUT Request-');
+  var u = {
+    name: req.body.player_name,
+    pswd: req.body.pswd,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name
+  }
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  res.render('user_details', {user:u});
 })
 
 router.get('/:user/results', function(request, response){

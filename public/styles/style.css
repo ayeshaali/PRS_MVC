@@ -52,9 +52,38 @@ div {
   text-align: center;
 }
 
+#enter_name_button {
+  margin-top: 5px;
+}
+
+#enter_name_input {
+  position: relative;
+  left: 4px;
+  margin-bottom: 5px;
+}
 #enter_psw_input {
   position: relative;
-  left: -2px;
+  left: 2px;
+}
+
+#enter_username {
+  position: relative;
+  left: 3px;
+  margin-bottom: 5px;
+}
+
+#enter_psw {
+  position: relative;
+  left: 19px;
+  margin-bottom: 5px;
+}
+
+#enter_first {
+  margin-bottom: 5px;
+}
+#enter_last {
+  position: relative;
+  left: 1px;
 }
 
 #player_image {
@@ -75,7 +104,7 @@ div {
 #playAgain {
   margin-top: 1em;
 }
-#show_rules_button, #show_stats_button, #show_about_button, #log_out, #play_again, #update {
+#show_rules_button, #show_stats_button, #show_about_button, #log_out, #play_again, #update, #create {
   text-decoration: none;
   position: relative;
   left: -5px;

@@ -5,8 +5,8 @@
       Log Out
       </button>
     </form>
-    <%if(title != "Details") {%>
-      <form action="/users/<%=user.name%>/edit" method="get">
+    <%if(title != "Details" && title != "stats") {%>
+      <form action="/user/<%=user.name%>/edit" method="get">
         <button type="submit" id = "update">
         Update Account
         </button>

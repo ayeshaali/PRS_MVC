@@ -46,6 +46,7 @@ exports.deleteUser = function(user_id) {
 
 exports.updateUser = function(user_id, updated_param, new_info) {
   var user = exports.getUser(user_id);
+  console.log(user);
   user[updated_param] = new_info;
   exports.updateUserCSV(user);
   return user;
