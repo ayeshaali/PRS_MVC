@@ -10,9 +10,6 @@ doc.useServiceAccountAuth(creds, function (err) {
   });
 });
 
-
-
-
 //CSV stuff---------------------------------
 var fs = require("fs");
 
