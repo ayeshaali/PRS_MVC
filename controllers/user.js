@@ -38,11 +38,29 @@ router.delete('/user', function (req, res) {
 
 router.put('/user/:id', function (req, res) {
   var u = {
+    original_name: req.params.id,
     name: req.body.player_name,
     pswd: req.body.pswd,
     first_name: req.body.first_name,
     last_name: req.body.last_name
   }
+  console.log(u);
+  user = Users.getUser(u.name);
+  if (u.original_name != u.name) {
+    if (user.name = "notarealuser") {
+      Users.createUser(u.name, u.pswd, u.first_name,u.last_name)
+      Users.deleteUser(u.original_name)
+    } else {
+      res.status(200);
+      res.setHeader('Content-Type', 'text/html')
+      res.render('user_details', {user:Users.getUser(u.original_name)});
+    }
+  } else {
+    Users.updateUser(u.original_name, "pswd", u.pswd);
+    Users.updateUser(u.first_name, "first_name", u.first_name);
+    Users.updateUser(u.last_name, "last_name", u.last_name);
+  }
+  
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});

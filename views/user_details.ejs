@@ -27,7 +27,7 @@
        <input type="submit" value="Delete User">
     </form>
     
-    <form action="/user?_method=PUT" method="post">
+    <form action="/user/<%=user.name%>?_method=PUT" method="post">
        <input type="submit" value="Modify User">
     </form>
     <%}%>

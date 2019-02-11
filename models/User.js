@@ -19,7 +19,6 @@ exports.createUser = function(user_id, user_password,first_name,last_name) {
   var user_data = {}
   user_data.name = user_id;
   user_data.pswd = user_password;
-  user_data.games =0;
   user_data.total_games =0;
   user_data.wins =0;
   user_data.losses =0;
@@ -139,7 +138,7 @@ exports.changeColors = function(){
 
 var createBlankUser= function(){
   var user={
-    name:"test",
+    name:"notarealuser",
     games_played:"test",
     lost:"test",
     won:"test",
