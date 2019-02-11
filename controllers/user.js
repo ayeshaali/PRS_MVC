@@ -32,8 +32,12 @@ router.get('/user/:id/edit', function(req, res){
   res.render('user_details', {user:u});
 });
 
-router.delete('/user', function (req, res) {
-  console.log('DELETE Request-');
+router.delete('/user/:id', function (req, res) {
+  console.log('DELETE Request-');
+  Users.deleteUser(req.params.id);
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  res.redirect('/');
 })
 
 router.put('/user/:id', function (req, res) {

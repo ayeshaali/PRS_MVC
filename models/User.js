@@ -39,7 +39,7 @@ exports.deleteUser = function(user_id) {
       index = i;
     }
   }
-  all_users.splice(i,1);
+  all_users.splice(index,1);
   dataJS.uploadCSV(all_users, "data/users.csv");
 }
 
