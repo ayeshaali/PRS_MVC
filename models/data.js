@@ -3,12 +3,29 @@ var creds = require('../client_secret.json');
 // Create a document object using the ID of the spreadsheet - obtained from its URL.
 var doc = new GoogleSpreadsheet('1DVgMG20OgfLR0leaJvzOiHDxp19EoyGKHTJxUCnxoX0');
 // Authenticate with the Google Spreadsheets API.
-doc.useServiceAccountAuth(creds, function (err) {
-  // Get all of the rows from the spreadsheet.
-  doc.getRows(1, function (err, rows) {
-    console.log(rows);
+
+exports.loadCSV = function(filename, callback) {
+  var user_data = [];
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.getRows(filename, function (err, rows) {
+      for(var i=0; i<rows.length; i++){
+        var user = {};
+        user.name = rows[i].name;
+        user.pswd = rows[i].pswd;
+        user.total_games = parseInt(rows[i].totalgames);
+        user.wins = parseInt(rows[i].wins);
+        user.losses = parseInt(rows[i].losses);
+        user.rock = parseFloat(rows[i].rock);
+        user.paper = parseFloat(rows[i].paper);
+        user.scissors = parseFloat(rows[i].scissors);
+        user.first_name=rows[i].firstname;
+        user.last_name=rows[i].lastname;
+        user_data.push(user);
+    });
   });
-});
+  return user_data
+}
+
 
 //CSV stuff---------------------------------
 var fs = require("fs");
