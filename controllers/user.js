@@ -25,10 +25,10 @@ router.post('/users',function(req,res){
   }
     else{
     user_data={};
-    user_data["failure"] = 5;
-    userName = "";
-    userPSWD = "";
-    res.render('index', {page:req.url, user:user_data, title:"Index"});
+    user_data["failure"] = 42;
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:user_data});
     }
 });
 

@@ -12,7 +12,10 @@
     <%if (user==null){%> Please enter your information to create an account <%}%>
   </div>
   <div id="enter_name">
-    <h2>User Details - <%if (user==null){%> Create Account <%} else{%> <%=user.name%> <%}%></h2>
+    <h2><%if (user==null){%> Create Account <%} else if (user["failure"]==42){%>
+          You did not enter valid text for one or more of the fields.
+          
+      <%}else{%>User Details: <%=user.name%> <%}%></h2>
 
     <form action="<%if(user==null){%>/users<%}else{%>/user/<%=user.name%>?_method=PUT<%}%>" method="post">
       Username: <input type="text" id="enter_username" name="player_name" value = "<%if (user!=null){%><%=user.name%><%} else {%><%}%>"><br>
