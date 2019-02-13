@@ -20,8 +20,16 @@ router.post('/users',function(req,res){
     first_name: req.body.first_name,
     last_name: req.body.last_name
   }
-  Users.createUser(u.name, u.pswd, u.first_name,u.last_name)
+  if(Users.createUser(u.name, u.pswd, u.first_name,u.last_name)){
   res.redirect('/');
+  }
+    else{
+    user_data={};
+    user_data["failure"] = 5;
+    userName = "";
+    userPSWD = "";
+    res.render('index', {page:req.url, user:user_data, title:"Index"});
+    }
 });
 
 router.get('/user/:id/edit', function(req, res){

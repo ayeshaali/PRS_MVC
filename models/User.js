@@ -15,6 +15,10 @@ exports.getUser = function(user_id) {
 }
 
 exports.createUser = function(user_id, user_password,first_name,last_name) {
+    if (user_id==null||user_id==""||first_name==null||first_name==""||last_name==null||last_name==""||user_password==null||user_password==""){
+        console.log("inv");
+        return false;
+    }
   var all_users = dataJS.loadCSV("data/users.csv");
   var user_data = {}
   user_data.name = user_id;
@@ -29,6 +33,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name) {
   user_data.last_name=last_name;
   all_users.push(user_data);
   dataJS.uploadCSV(all_users, "data/users.csv");
+    return true;
 }
 
 exports.deleteUser = function(user_id) {
