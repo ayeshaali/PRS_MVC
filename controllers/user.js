@@ -34,10 +34,11 @@ router.post('/users',function(req,res){
 
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
-  var u = Users.getUser(req.params.id);
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  var u = Users.getUser(req.params.id, function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 router.delete('/user/:id', function (req, res) {
@@ -72,7 +73,7 @@ router.put('/user/:id', function (req, res) {
     Users.updateUser(u.first_name, "first_name", u.first_name);
     Users.updateUser(u.last_name, "last_name", u.last_name);
   }
-  
+
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
@@ -87,7 +88,7 @@ router.get('/:user/results', function(request, response){
 
   var villainPrevious=fs.readFileSync("data/villainPrevious.txt",'utf8');
   var userPrevious=fs.readFileSync("data/userPrevious.txt",'utf8');
-  
+
   if (user_data.weapon=="error"||user_data.villain=="error"){
     return response.redirect('/playAgain');
   } else{
@@ -95,29 +96,29 @@ router.get('/:user/results', function(request, response){
     var arr = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
     user_data["result"] = arr[0];
     user_data["response"] =arr[1];
-    
+
     var user_obj = Users.getUser(user_data.name);
     Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1);
     Users.updateUser(user_data.name, user_data.weapon, user_obj[user_data.weapon] + 1);
     switch(user_data["result"]){
       case "won":
-      Users.updateUser(user_data.name, "wins", user_obj.wins + 1);        
+      Users.updateUser(user_data.name, "wins", user_obj.wins + 1);
       break;
       case "lost":
-      Users.updateUser(user_data.name, "losses", user_obj.losses + 1);        
+      Users.updateUser(user_data.name, "losses", user_obj.losses + 1);
       break;
     }
-    
+
     //manage villain CSV for games, wins, losses, and weapon used
     var villain_obj = Villains.getVillain(user_data.villain);
     Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1);
     Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1);
     switch(user_data["result"]){
       case "lost":
-      Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);        
+      Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);
       break;
       case "won":
-      Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);        
+      Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);
       break;
     }
     console.log(user_data);

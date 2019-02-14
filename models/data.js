@@ -4,26 +4,13 @@ var creds = require('../client_secret.json');
 var doc = new GoogleSpreadsheet('1DVgMG20OgfLR0leaJvzOiHDxp19EoyGKHTJxUCnxoX0');
 // Authenticate with the Google Spreadsheets API.
 
-exports.loadCSV = function(filename, callback) {
+exports.loadGoogle = function(filename, callback) {
   var user_data = [];
   doc.useServiceAccountAuth(creds, function (err) {
     doc.getRows(filename, function (err, rows) {
-      for(var i=0; i<rows.length; i++){
-        var user = {};
-        user.name = rows[i].name;
-        user.pswd = rows[i].pswd;
-        user.total_games = parseInt(rows[i].totalgames);
-        user.wins = parseInt(rows[i].wins);
-        user.losses = parseInt(rows[i].losses);
-        user.rock = parseFloat(rows[i].rock);
-        user.paper = parseFloat(rows[i].paper);
-        user.scissors = parseFloat(rows[i].scissors);
-        user.first_name=rows[i].firstname;
-        user.last_name=rows[i].lastname;
-        user_data.push(user);
+      callback(rows);
     });
   });
-  return user_data
 }
 
 

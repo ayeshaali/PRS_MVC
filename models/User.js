@@ -2,16 +2,18 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var villainJS = require(__dirname +'/Villain');
 
-exports.getUser = function(user_id) {
+exports.getUser = function(user_id, callback) {
   console.log("Users.getUser: "+user_id);
   var user = createBlankUser();
-  var all_users = dataJS.loadCSV("data/users.csv");
-  for(var i=0; i<all_users.length; i++){
-    if(all_users[i].name==user_id.trim()){
-      user = all_users[i];
+  var all_users = dataJS.loadGoogle(1, function(all_users) {
+    for(var i=0; i<all_users.length; i++){
+      if(all_users[i].name==user_id.trim()){
+        user = all_users[i];
+        break;
+      }
     }
-  }
-  return user;
+    callback(user);
+  });
 }
 
 exports.createUser = function(user_id, user_password,first_name,last_name) {
@@ -82,7 +84,7 @@ exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevio
           result[0] = "lost";
           break;
     }
-    
+
     result[1]=villainWeapon;
     return result;
     fs.writeFileSync("data/villainPrevious.txt",villainWeapon,'utf8')
