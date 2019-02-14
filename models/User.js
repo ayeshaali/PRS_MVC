@@ -51,23 +51,7 @@ exports.deleteUser = function(user_id) {
 }
 
 exports.updateUser = function(user_id, updated_param, new_info) {
-  var user = exports.getUser(user_id);
-  console.log(user);
-  user[updated_param] = new_info;
-  exports.updateUserCSV(user);
-  return user;
-}
-
-exports.updateUserCSV = function(updated_user) {
-  var all_users = dataJS.loadCSV("data/users.csv");
-  for(var i=0; i<all_users.length; i++){
-    if(all_users[i].name==updated_user.name) {
-      all_users[i] = updated_user;
-      break;
-    }
-  }
-  dataJS.uploadCSV(all_users, "data/users.csv");
-  return all_users;
+  dataJS.updateCell(1, user_id, updated_param+1, new_info);
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
