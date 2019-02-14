@@ -59,13 +59,13 @@ app.get('/login', function(request, response){
   };
   userName = user_data["name"];
   userPSWD = user_data["pswd"];
-  var user_obj = Users.getUser(userName, function(user_data){
+  Users.getUser(userName, function(user_data){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-
     if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+      console.log(user_data["name"]);
       response.render('index', {page:request.url, user:user_data, title:"Index"});
-    } else if (user_obj.pswd == userPSWD) {
+    } else if (user_data.pswd == userPSWD) {
       response.render('game', {page:request.url, user:user_data, title:"valid"});
     } else {
       user_data["failure"] = 4;
