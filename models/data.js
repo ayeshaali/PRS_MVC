@@ -52,6 +52,39 @@ exports.loadCSV =function(filename) {
 }
 
 //uploads the csv containing all the gameplay data (used to update villains.csv and users.csv)
+
+
+exports.updateCell=function(GoogleSpreadsheet, userName, columnToUpdate, newValue){
+    GoogleSpreadsheet.getCells({
+      'min-col': 1,
+      'max-col': 2,
+      'return-empty': true
+    }, function(1,err, cells) {
+        for(var i=0; i<cells.length;i++){
+            if(cells[i].trim()==userName.trim()){
+                
+            sheet.getRows({
+      offset: 1,
+      limit: 20,
+      orderby: 'col2'
+    }, function(1,err, rows ){
+                
+                
+                
+            }
+                
+                
+                
+                
+                
+                
+                
+            }
+                 
+            }
+        }
+    });
+}
 exports.uploadCSV =function(user_data, file_name) {
   var out="";
   user_data.sort(function(a,b) {
