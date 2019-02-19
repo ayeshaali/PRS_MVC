@@ -21,20 +21,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name) {
         console.log("inv");
         return false;
     }
-  var all_users = dataJS.loadCSV("data/users.csv");
-  var user_data = {}
-  user_data.name = user_id;
-  user_data.pswd = user_password;
-  user_data.total_games =0;
-  user_data.wins =0;
-  user_data.losses =0;
-  user_data.rock =0;
-  user_data.paper =0;
-  user_data.scissors = 0;
-  user_data.first_name=first_name;
-  user_data.last_name=last_name;
-  all_users.push(user_data);
-  dataJS.uploadCSV(all_users, "data/users.csv");
+    dataJS.createRow(1, user_id, user_password,first_name,last_name)
     return true;
 }
 
@@ -51,7 +38,7 @@ exports.deleteUser = function(user_id) {
 }
 
 exports.updateUser = function(user_id, updated_param, new_info) {
-  dataJS.updateCell(1, user_id, updated_param+1, new_info);
+  dataJS.updateCell(user_id, updated_param+1, new_info);
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
