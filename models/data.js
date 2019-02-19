@@ -59,31 +59,41 @@ exports.updateCell=function(GoogleSpreadsheet, userName, columnToUpdate, newValu
       'min-col': 1,
       'max-col': 2,
       'return-empty': true
-    }, function(1,err, cells) {
+    }, function(err, cells) {
         for(var i=0; i<cells.length;i++){
             if(cells[i].trim()==userName.trim()){
                 
-            sheet.getRows({
-      offset: 1,
-      limit: 20,
-      orderby: 'col2'
-    }, function(1,err, rows ){
+                //
                 
                 
-                
+                GoogleSpreadsheet.getCells({
+      'min-row': i+1,
+      'max-row': i+2,
+    }, function(err, cells) {
+        for(var i=0; i<cells.length;i++){   
+            cells[columnToUpdate].setValue(newValue,callback);
+            
+            
             }
+                 
+        }
+    );
                 
                 
                 
                 
                 
                 
-                
+                //
+                    
+                        
             }
+            
+        break;
                  
             }
         }
-    });
+    );
 }
 exports.uploadCSV =function(user_data, file_name) {
   var out="";
