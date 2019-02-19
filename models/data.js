@@ -55,7 +55,10 @@ exports.loadCSV =function(filename) {
 
 
 exports.updateCell=function(userName, columnToUpdate, newValue){
+  console.log("update cell por favor")
+
   var sheet;
+  doc.useServiceAccountAuth(creds, function (err) {
   doc.getInfo(function(err,info){
     sheet=info.worksheets[0];
     sheet.getCells({
@@ -64,32 +67,27 @@ exports.updateCell=function(userName, columnToUpdate, newValue){
       'return-empty': true
     }, function(err, cells) {
         for(var i=0; i<cells.length;i++){
-            if(cells[i]==userName){
-                
-                
+          console.log(cells[i].value);
+            if(cells[i].value==userName){
                 sheet.getCells({
-      'min-row': i+1,
-      'max-row': i+2,
-    }, function(err, cells) {
-        for(var i=0; i<cells.length;i++){   
-            console.log(cells[columnToUpdate]);
-            cells[columnToUpdate].setValue(newValue,callback);
-            console.log(cells[columnToUpdate]);
-            
-            }
+                  'min-row': i+1,
+                  'max-row': i+2,
+                }, function(err, cells) {
+                      for(var i=0; i<cells.length;i++){   
+                      console.log(cells[columnToUpdate]);
+                      cells[columnToUpdate].setValue(newValue);
+                      console.log(cells[columnToUpdate]);
+                    }
                  
-        }
-    );    
-                        
-            }
-            
-        break;
-                 
+                }
+              );                
+            }  
+            break;         
             }
         }
     );
   });
-    
+});
 }
 exports.uploadCSV =function(user_data, file_name) {
   var out="";
