@@ -39,3 +39,13 @@ exports.updateCell=function(filename, userName, newStuff, callback){
   });
 }
 
+exports.createRow = function(obj, callback) {
+  var sheet;
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.addRow(1, obj, function(){ 
+      console.log("Calling first callback")
+      callback();
+    });
+  });
+}
+

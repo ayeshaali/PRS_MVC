@@ -20,8 +20,8 @@
     <form action="<%if(user==null){%>/users<%}else{%>/user/<%=user.name%>?_method=PUT<%}%>" method="post">
       Username: <input type="text" id="enter_username" name="player_name" value = "<%if (user!=null){%><%=user.name%><%} else {%><%}%>"><br>
       PSWD: <input type="text" id="enter_psw" name="pswd" value = "<%if (user!=null){%><%=user.pswd%><%}%>"><br>
-      First Name: <input type="text" id="enter_first" name="first_name" value = "<%if (user!=null){%><%=user.first_name%><%}%>"><br>
-      Last Name: <input type="text" id="enter_last" name="last_name" value = "<%if (user!=null){%><%=user.last_name%><%}%>"><br>
+      First Name: <input type="text" id="enter_first" name="first" value = "<%if (user!=null){%><%=user.first%><%}%>"><br>
+      Last Name: <input type="text" id="enter_last" name="last" value = "<%if (user!=null){%><%=user.last%><%}%>"><br>
       <br>
       <button type="submit" id = "enter_name_button"><%if(user==null){%>Create Account<%}else{%>Modify Account<%}%></button>
     </form>

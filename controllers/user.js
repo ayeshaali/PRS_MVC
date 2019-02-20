@@ -20,16 +20,18 @@ router.post('/users',function(req,res){
     first: req.body.first,
     last: req.body.last
   }
-  if(Users.createUser(u.name, u.pswd, u.first,u.last)){
-  res.redirect('/');
-  }
-    else{
-    user_data={};
-    user_data["failure"] = 42;
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {user:user_data});
+  Users.createUser(u.name, u.pswd, u.first,u.last, function(result){
+    if (result) {
+      console.log("Second callback called")
+      res.redirect('/');
+    } else {
+      user_data={};
+      user_data["failure"] = 42;
+      res.status(200);
+      res.setHeader('Content-Type', 'text/html')
+      res.render('user_details', {user:user_data});
     }
+  });
 });
 
 router.get('/user/:id/edit', function(req, res){

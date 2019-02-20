@@ -15,13 +15,33 @@ exports.getUser = function(user_id, callback) {
   });
 }
 
-exports.createUser = function(user_id, user_password,first_name,last_name) {
+exports.createUser = function(user_id, user_password,first_name,last_name, callback) {
+    var result = true;
     if (user_id==null||user_id==""||first_name==null||first_name==""||last_name==null||last_name==""||user_password==null||user_password==""){
         console.log("inv");
-        return false;
+        result= false;
     }
-    dataJS.createRow(1, user_id, user_password,first_name,last_name)
-    return true;
+    
+    if (result) {
+      var new_obj = {
+        "name": user_id,
+        "pswd": user_password,
+        "total": 0,
+        "wins": 0,
+        "losses": 0,
+        "rock": 0,
+        "paper": 0,
+        "scissors": 0,
+        "first": first_name,
+        "last": last_name
+      }
+      dataJS.createRow(new_obj, function(){
+        console.log("Calling second callback")
+        callback(true);
+      })
+    } else {
+      callback(false);
+    }
 }
 
 exports.deleteUser = function(user_id) {
@@ -36,8 +56,8 @@ exports.deleteUser = function(user_id) {
   dataJS.uploadCSV(all_users, "data/users.csv");
 }
 
-exports.updateUser = function(user_id, updates, callback) {
-  dataJS.updateCell(0, user_id, updates, callback)
+exports.updateUser = function(user_id, updates) {
+  dataJS.updateCell(0, user_id, updates)
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
