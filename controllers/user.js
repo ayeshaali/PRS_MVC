@@ -98,37 +98,35 @@ router.get('/:user/results', function(request, response){
     user_data["response"] =arr[1];
 
     Users.getUser(user_data.name, function(user_obj) {
-      Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1, function(){
-        console.log("step 2")
-        Users.updateUser(user_data.name, user_data.weapon, user_obj[user_data.weapon] + 1, function(){
+      user_obj.total_games +=1
+      user_obj[user_data.weapon]+=1
+      switch(user_data["result"]){
+        case "won":
+          user_obj.wins +=1
+          break;
+        case "lost":
+          user_obj.losses +=1
+          break;  
+      }
+      
+      Villains.getVillain(user_data.villain, function(villain_obj){
+          villain_obj.total_games +=1
+          villain_obj[user_data.weapon]+=1
           switch(user_data["result"]){
             case "won":
-            Users.updateUser(user_data.name, "wins", user_obj.wins + 1, function(){});
-            break;
+              villain_obj.wins +=1
+              break;
             case "lost":
-            Users.updateUser(user_data.name, "losses", user_obj.losses + 1, function(){});
-            break;  
+              villain_obj.losses +=1
+              break;  
           }
-          Villains.getVillain(user_data.villain, function(villain_obj){
-            Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1)
-              Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1)
-                switch(user_data["result"]){
-                  case "lost":
-                  Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);
-                  break;
-                  case "won":
-                  Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);
-                  break;
-                  
-                }
+            
                 response.status(200);
                 response.setHeader('Content-Type', 'text/html')
                 response.render('results',{page:request.url, user:user_data, title:"results"});
-              });
-            });
           });
-        });
-  }
+      });
+    }
 });
 
 module.exports = router;
