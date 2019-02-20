@@ -4,7 +4,7 @@ var userJS = require(__dirname +'/User');
 
 exports.getVillain = function(villain_id, callback) {
   var user;
-  var all_users = dataJS.loadGoogle(2, function(all_users) {
+  dataJS.loadGoogle(2, function(all_users) {
     for(var i=0; i<all_users.length; i++){
       if(all_users[i].name==villain_id.trim()){
         user = all_users[i];
