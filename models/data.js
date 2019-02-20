@@ -54,7 +54,7 @@ exports.loadCSV =function(filename) {
 //uploads the csv containing all the gameplay data (used to update villains.csv and users.csv)
 
 
-exports.updateCell=function(userName, columnToUpdate, newValue, callback){
+exports.updateCell=function(userName, newStuff, callback){
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
   doc.getInfo(function(err,info){
@@ -72,7 +72,7 @@ exports.updateCell=function(userName, columnToUpdate, newValue, callback){
                   'max-row': i+2,
                 }, function(err, cells) {
                       for(var i=0; i<cells.length;i++){   
-                      cells[columnToUpdate].setValue(newValue);                    }
+                      cells[i].setValue(newStuff[i]);                    }
                  
                 }
               );                
