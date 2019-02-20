@@ -113,8 +113,8 @@ router.get('/:user/results', function(request, response){
           }
           console.log("step 4")
           Villains.getVillain(user_data.villain, function(villain_obj){
-            Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1, function(){
-              Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1, function(){
+            Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1)
+              Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1)
                 switch(user_data["result"]){
                   case "lost":
                   Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);
@@ -132,8 +132,6 @@ router.get('/:user/results', function(request, response){
             });
           });
         });
-      });
-    });
   }
 });
 
