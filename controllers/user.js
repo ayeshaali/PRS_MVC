@@ -7,9 +7,12 @@ var Villains = require('../models/Villain');
 
 router.get('/user/new', function(req, res){
   var u;
+  var feedback = {
+    failure:0
+  }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  res.render('user_details', {user:u, feedback:feedback});
 });
 
 router.post('/users',function(req,res){
@@ -20,26 +23,32 @@ router.post('/users',function(req,res){
     first: req.body.first,
     last: req.body.last
   }
-  Users.createUser(u.name, u.pswd, u.first,u.last, function(result){
+  var feedback = {
+    failure: 0
+  }
+  Users.createUser(u.name, u.pswd, u.first,u.last, function(result, feedbackN){
     if (result) {
       console.log("Second callback called")
       res.redirect('/');
     } else {
-      user_data={};
-      user_data["failure"] = 42;
+      var u;
+      feedback["failure"] = feedbackN;
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
-      res.render('user_details', {user:user_data});
+      res.render('user_details', {user:u, feedback:feedback});
     }
   });
 });
 
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
+  var feedback = {
+    failure:0
+  }
   var u = Users.getUser(req.params.id, function(u){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {user:u});
+    res.render('user_details', {user:u, feedback:feedback});
   });
 });
 
@@ -60,6 +69,9 @@ router.put('/user/:id', function (req, res) {
     last: req.body.last
   }
   console.log(u);
+  var feedback = {
+    failure:0
+  }
   user = Users.getUser(u.name);
   if (u.original_name != u.name) {
     if (user.name = "notarealuser") {
@@ -68,7 +80,7 @@ router.put('/user/:id', function (req, res) {
     } else {
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
-      res.render('user_details', {user:Users.getUser(u.original_name)});
+      res.render('user_details', {user:Users.getUser(u.original_name), feedback:feedback});
     }
   } else {
     Users.updateUser(u.original_name, "pswd", u.pswd);
@@ -78,7 +90,7 @@ router.put('/user/:id', function (req, res) {
 
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  res.render('user_details', {user:u, feedback:feedback});
 })
 
 router.get('/:user/results', function(request, response){
@@ -101,7 +113,7 @@ router.get('/:user/results', function(request, response){
 
     Users.getUser(user_data.name, function(user_obj) {
       user_obj.total =parseInt(user_obj.total)+1
-      user_obj[user_data.weapon]+=parseInt(user_obj[user_data.weapon])+ 1
+      user_obj[user_data.weapon]=parseInt(user_obj[user_data.weapon])+ 1
       switch(user_data["result"]){
         case "won":
           user_obj.wins =parseInt(user_obj.wins)+1
