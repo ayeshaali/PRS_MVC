@@ -109,21 +109,22 @@ router.get('/:user/results', function(request, response){
             Users.updateUser(user_data.name, "losses", user_obj.losses + 1, function(){});
             break;  
           }
-      
-          // Villains.getVillain(user_data.villain, function(villain_obj){
-          //   Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1, function(){
-          //     Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1, function(){
-          //       switch(user_data["result"]){
-          //         case "lost":
-          //         Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);
-          //         break;
-          //         case "won":
-          //         Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);
-          //         break;
-                  response.status(200);
-                  response.setHeader('Content-Type', 'text/html')
-                  response.render('results',{page:request.url, user:user_data, title:"results"});
+          
+          Villains.getVillain(user_data.villain, function(villain_obj){
+            Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1, function(){
+              Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1, function(){
+                switch(user_data["result"]){
+                  case "lost":
+                  Villains.updateVillain(user_data.villain, "wins", villain_obj.wins + 1);
+                  break;
+                  case "won":
+                  Villains.updateVillain(user_data.villain, "losses", villain_obj.losses + 1);
+                  break;
+                  
                 }
+                response.status(200);
+                response.setHeader('Content-Type', 'text/html')
+                response.render('results',{page:request.url, user:user_data, title:"results"});
               });
             });
           });

@@ -2,25 +2,26 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var userJS = require(__dirname +'/User');
 
-exports.getVillain = function(villain_id) {
+exports.getVillain = function(villain_id, callback) {
   console.log("Users.getVillain: "+villain_id);
   var user;
   var all_users = dataJS.loadGoogle(2, function(all_users) {
     for(var i=0; i<all_users.length; i++){
-      if(all_users[i].name==user_id.trim()){
+      if(all_users[i].name==villain_id.trim()){
         user = all_users[i];
         break;
       }
     }
     callback(user);
-  }
+  });
 }
 
 exports.updateVillain = function(villain_id, updated_param, info) {
-  var villain = exports.getVillain(villain_id);
-  villain[updated_param] = info;
-  exports.updateVillainCSV(villain);
-  return villain;
+  var villain = exports.getVillain(villain_id, function(villain_obj){
+    villain_obj[updated_param] = info;
+    exports.updateVillainCSV(villain);
+    return villain_obj;
+  });
 }
 
 exports.updateVillainCSV = function(updated_villain) {
