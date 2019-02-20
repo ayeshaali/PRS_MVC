@@ -98,8 +98,6 @@ router.get('/:user/results', function(request, response){
     user_data["response"] =arr[1];
 
     Users.getUser(user_data.name, function(user_obj) {
-      console.log("step 1")
-      console.log(user_obj);
       Users.updateUser(user_data.name, "total_games", user_obj.total_games + 1, function(){
         console.log("step 2")
         Users.updateUser(user_data.name, user_data.weapon, user_obj[user_data.weapon] + 1, function(){
@@ -111,7 +109,6 @@ router.get('/:user/results', function(request, response){
             Users.updateUser(user_data.name, "losses", user_obj.losses + 1, function(){});
             break;  
           }
-          console.log("step 4")
           Villains.getVillain(user_data.villain, function(villain_obj){
             Villains.updateVillain(user_data.villain, "total_games", villain_obj.total_games + 1)
               Villains.updateVillain(user_data.villain, user_data.response, villain_obj[user_data.response] + 1)
@@ -124,7 +121,6 @@ router.get('/:user/results', function(request, response){
                   break;
                   
                 }
-                console.log("step 5")
                 response.status(200);
                 response.setHeader('Content-Type', 'text/html')
                 response.render('results',{page:request.url, user:user_data, title:"results"});

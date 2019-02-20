@@ -55,8 +55,6 @@ exports.loadCSV =function(filename) {
 
 
 exports.updateCell=function(userName, columnToUpdate, newValue, callback){
-  console.log("update cell por favor")
-
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
   doc.getInfo(function(err,info){
@@ -74,10 +72,7 @@ exports.updateCell=function(userName, columnToUpdate, newValue, callback){
                   'max-row': i+2,
                 }, function(err, cells) {
                       for(var i=0; i<cells.length;i++){   
-                      console.log(cells[columnToUpdate]);
-                      cells[columnToUpdate].setValue(newValue);
-                      console.log(cells[columnToUpdate]);
-                    }
+                      cells[columnToUpdate].setValue(newValue);                    }
                  
                 }
               );                

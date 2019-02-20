@@ -3,7 +3,6 @@ var dataJS = require(__dirname +'/data');
 var villainJS = require(__dirname +'/Villain');
 
 exports.getUser = function(user_id, callback) {
-  console.log("Users.getUser: "+user_id);
   var user = createBlankUser();
   var all_users = dataJS.loadGoogle(1, function(all_users) {
     for(var i=0; i<all_users.length; i++){
