@@ -19,7 +19,7 @@ exports.getVillain = function(villain_id, callback) {
 exports.updateVillain = function(villain_id, updated_param, info) {
   var villain = exports.getVillain(villain_id, function(villain_obj){
     villain_obj[updated_param] = info;
-    exports.updateVillainCSV(villain);
+    exports.updateVillainCSV(villain_obj["name"]);
     return villain_obj;
   });
 }
