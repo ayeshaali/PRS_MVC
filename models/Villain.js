@@ -4,14 +4,16 @@ var userJS = require(__dirname +'/User');
 
 exports.getVillain = function(villain_id) {
   console.log("Users.getVillain: "+villain_id);
-  var all_villains = dataJS.loadCSV("data/villains.csv");
-  var villain;
-  for(var i=0; i<all_villains.length; i++){
-    if(all_villains[i].name==villain_id.trim()){
-      villain = all_villains[i];
+  var user;
+  var all_users = dataJS.loadGoogle(2, function(all_users) {
+    for(var i=0; i<all_users.length; i++){
+      if(all_users[i].name==user_id.trim()){
+        user = all_users[i];
+        break;
+      }
     }
+    callback(user);
   }
-  return villain;
 }
 
 exports.updateVillain = function(villain_id, updated_param, info) {

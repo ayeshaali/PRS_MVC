@@ -54,7 +54,7 @@ exports.loadCSV =function(filename) {
 //uploads the csv containing all the gameplay data (used to update villains.csv and users.csv)
 
 
-exports.updateCell=function(userName, columnToUpdate, newValue){
+exports.updateCell=function(userName, columnToUpdate, newValue, callback){
   console.log("update cell por favor")
 
   var sheet;
@@ -84,6 +84,7 @@ exports.updateCell=function(userName, columnToUpdate, newValue){
             }  
             break;         
             }
+            callback();
         }
     );
   });
