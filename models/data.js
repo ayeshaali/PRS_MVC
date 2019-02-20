@@ -53,38 +53,32 @@ exports.loadCSV =function(filename) {
 
 //uploads the csv containing all the gameplay data (used to update villains.csv and users.csv)
 
-
-exports.updateCell=function(userName, newStuff, callback){
+exports.updateCell=function(filename, userName, newStuff, callback){
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
-  doc.getInfo(function(err,info){
-    sheet=info.worksheets[0];
-    sheet.getCells({
-      'min-col': 1,
-      'max-col': 2,
-      'return-empty': true
-    }, function(err, cells) {
+    doc.getInfo(function(err,info){
+      sheet=info.worksheets[filename];
+      sheet.getCells({
+        'min-col': 1,
+        'max-col': 1,
+        'return-empty': true}, function(err, cells) {
         for(var i=0; i<cells.length;i++){
-          console.log(cells[i].value);
-            if(cells[i].value==userName){
-                sheet.getCells({
-                  'min-row': i+1,
-                  'max-row': i+2,
-                }, function(err, cells) {
-                      for(var i=0; i<cells.length;i++){   
-                      cells[i].setValue(newStuff[i]);                    }
-                 
-                }
-              );                
-            }  
-            break;         
-            }
-            callback();
+          if(cells[i].value==userName){
+            sheet.getCells({'min-row': i+1,'max-row': i+1}, 
+            function(err, cells) {
+              for(var i=0; i<cells.length;i++){   
+                cells[i].setValue(newStuff[i]);                    
+              }
+            });  
+            break;                       
+          }  
         }
-    );
+        callback();
+      });
+    });
   });
-});
 }
+
 exports.uploadCSV =function(user_data, file_name) {
   var out="";
   user_data.sort(function(a,b) {

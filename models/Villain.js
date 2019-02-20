@@ -3,11 +3,9 @@ var dataJS = require(__dirname +'/data');
 var userJS = require(__dirname +'/User');
 
 exports.getVillain = function(villain_id, callback) {
-  console.log("Users.getVillain: "+villain_id);
   var user;
   var all_users = dataJS.loadGoogle(2, function(all_users) {
     for(var i=0; i<all_users.length; i++){
-      console.log(all_users[i].name);
       if(all_users[i].name==villain_id.trim()){
         user = all_users[i];
         break;
@@ -17,25 +15,10 @@ exports.getVillain = function(villain_id, callback) {
   });
 }
 
-exports.updateVillain = function(villain_id, updated_param, info) {
-  var villain = exports.getVillain(villain_id, function(villain_obj){
-    villain_obj[updated_param] = info;
-    exports.updateVillainCSV(villain_obj["name"]);
-    return villain_obj;
-  });
+exports.updateVillain = function(villain_id, updates, callback) {
+  dataJS.updateCell(1, villain_id, updates, callback)
 }
 
-exports.updateVillainCSV = function(updated_villain) {
-  var all_villains = dataJS.loadCSV("data/villains.csv");
-  for(var i=1; i<all_villains.length; i++){
-    if(all_villains[i].name==updated_villain.name) {
-      all_villains[i] = updated_villain;
-      break;
-    }
-  }
-  dataJS.uploadCSV(all_villains, "data/villains.csv");
-  return all_villains;
-}
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){
     var rand=Math.random();

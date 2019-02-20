@@ -36,8 +36,8 @@ exports.deleteUser = function(user_id) {
   dataJS.uploadCSV(all_users, "data/users.csv");
 }
 
-exports.updateUser = function(user_id, updated_param, new_info, callback) {
-  dataJS.updateCell(user_id, updated_param+1, new_info, callback);
+exports.updateUser = function(user_id, updates, callback) {
+  dataJS.updateCell(0, user_id, updates, callback)
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
