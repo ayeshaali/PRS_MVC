@@ -53,16 +53,8 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
     })
 }
 
-exports.deleteUser = function(user_id) {
-  var all_users = dataJS.loadCSV("data/users.csv");
-  var index;
-  for(var i=1; i<all_users.length; i++){
-    if(all_users[i].name==user_id.trim()){
-      index = i;
-    }
-  }
-  all_users.splice(index,1);
-  dataJS.uploadCSV(all_users, "data/users.csv");
+exports.deleteUser = function(user_id, callback) {
+  dataJS.deleteRow(user_id, callback)
 }
 
 exports.updateUser = function(user_id, updates, callback) {

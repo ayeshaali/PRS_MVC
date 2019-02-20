@@ -49,3 +49,26 @@ exports.createRow = function(obj, callback) {
   });
 }
 
+exports.deleteRow = function(user_id, callback) {
+  var sheet;
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.getInfo(function(err,info){
+      sheet=info.worksheets[0];
+      sheet.getCells({
+        'min-col': 1,
+        'max-col': 1,
+        'return-empty': true}, function(err, cells) {
+        for(var i=0; i<cells.length;i++){
+          if(cells[i].value==user_id){
+            sheet.getRows(1, function (err, rows) {
+              rows[i].del(function(){
+                callback();
+              });
+            });
+          }
+        }
+      });
+    });
+  });
+}
+
