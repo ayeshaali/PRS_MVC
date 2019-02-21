@@ -101,15 +101,17 @@ app.get('/rules', function(request, response){
 
 //handles a request for the rules page (inputs the necessary data and sends the user to the newly rendered stats page)
 app.get('/stats', function(request, response){
-  var user_data = dataJS.loadCSV("data/users.csv");
-  var villain_data = dataJS.loadCSV("data/villains.csv")
-  var data = {};
-  data["player"] = user_data;
-  data["villain"] = villain_data;
-  console.log(user_data);
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.render('stats', {page:request.url, user:data, title:"stats"});
+  dataJS.loadGoogle(1, function(user_data){
+    dataJS.loadGoogle(2, function(villain_data){
+      var data = {};
+      data["player"] = user_data;
+      data["villain"] = villain_data;
+      console.log(user_data);
+      response.status(200);
+      response.setHeader('Content-Type', 'text/html')
+      response.render('stats', {page:request.url, user:data, title:"stats"});
+    });
+  });
 });
 
 //handles a request for the rules page (sends the user to the rules page)
