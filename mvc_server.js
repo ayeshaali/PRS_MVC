@@ -37,8 +37,6 @@ app.listen(port, function(){
 });
 
 app.use(require('./controllers/user'));
-
-
 //first request, renders index
 app.get('/', function(request, response){
   var user_data={};
@@ -82,7 +80,7 @@ app.get('/playAgain', function(request, response){
   var user_data={};
   user_data["name"] = userName;
   user_data["pswd"] = userPSWD;
-  var csv_data = dataJS.loadCSV("data/users.csv");
+  // var csv_data = dataJS.loadCSV("data/users.csv");
   //if the saved username is empty than return to index page
   if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
     response.render('index', {page:request.url, user:user_data, title:"Index"});
