@@ -115,9 +115,9 @@ router.put('/user/:id', function (req, res) {
   }
 })
 
-router.get('/:user/results', function(request, response){
+router.get('/user/:id/results', function(request, response){
   var user_data={
-    name: request.params.user,
+    name: request.params.id,
     pswd: request.params.pswd,
     weapon: request.query.weapon,
     villain: request.query.villain
