@@ -89,6 +89,14 @@ app.get('/playAgain', function(request, response){
   }
 });
 
+app.get('/error', function(request, response){
+  //use the saved username and password which resets when you return to login page
+  var user_data={};
+  user_data["name"] = userName;
+  user_data["pswd"] = userPSWD;
+  response.render('game', {page:request.url, user:user_data, title:"error"});
+});
+
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){
   user_data = {}

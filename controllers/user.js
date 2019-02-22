@@ -127,9 +127,7 @@ router.get('/:user/results', function(request, response){
   var userPrevious=fs.readFileSync("data/userPrevious.txt",'utf8');
 
   if (user_data.weapon=="error"||user_data.villain=="error"){
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('game',{page:request.url, user:user_data, title:"error"});
+    response.redirect("/error");
   } else{
     var villainWeapon= "";
     var arr = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);
