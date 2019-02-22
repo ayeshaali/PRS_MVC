@@ -74,6 +74,15 @@ router.put('/user/:id', function (req, res) {
     failure:0
   }
   
+  if (u.name==null||u.name==""||u.pswd==null||u.pswd==""||u.first==null||u.first==""||u.last==null||u.last==""){
+      console.log("inv");
+      result= false;
+      feedbackN = 42;
+      res.status(200);
+      res.setHeader('Content-Type', 'text/html')
+      res.render('user_details', {user:u, feedback:feedback});
+  }
+  
   if (u.original_name != u.name) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
@@ -109,6 +118,7 @@ router.put('/user/:id', function (req, res) {
 router.get('/:user/results', function(request, response){
   var user_data={
     name: request.params.user,
+    pswd: request.params.pswd,
     weapon: request.query.weapon,
     villain: request.query.villain
   };
@@ -117,7 +127,9 @@ router.get('/:user/results', function(request, response){
   var userPrevious=fs.readFileSync("data/userPrevious.txt",'utf8');
 
   if (user_data.weapon=="error"||user_data.villain=="error"){
-    return response.redirect('/playAgain');
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.render('game',{page:request.url, user:user_data, title:"error"});
   } else{
     var villainWeapon= "";
     var arr = Users.handleThrow(user_data.weapon, user_data.villain, villainWeapon, villainPrevious,userPrevious);

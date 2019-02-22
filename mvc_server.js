@@ -64,7 +64,7 @@ app.get('/login', function(request, response){
       console.log(user_data["name"]);
       response.render('index', {page:request.url, user:user_data, title:"Index"});
     } else if (user_data.pswd == userPSWD) {
-      response.render('game', {page:request.url, user:user_data, title:"valid"});
+      response.render('game', {page:request.url, user:user_data, title:"index"});
     } else {
       user_data["failure"] = 4;
       userName = "";
@@ -85,7 +85,7 @@ app.get('/playAgain', function(request, response){
   if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
     response.render('index', {page:request.url, user:user_data, title:"Index"});
   } else {
-    response.render('game', {page:request.url, user:user_data, title:"valid"});
+    response.render('game', {page:request.url, user:user_data, title:"playGame"});
   }
 });
 
