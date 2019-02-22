@@ -60,11 +60,13 @@ exports.deleteRow = function(user_id, callback) {
         'return-empty': true}, function(err, cells) {
         for(var i=0; i<cells.length;i++){
           if(cells[i].value==user_id){
-            sheet.getRows(1, function (err, rows) {
-              rows[i].del(function(){
-                callback();
-              });
+            var index = i;
+             sheet.getRows(function (err, rows) {
+               rows[i-1].del(function(err){
+                 callback();
+               });
             });
+            break;
           }
         }
       });
