@@ -73,25 +73,37 @@ router.put('/user/:id', function (req, res) {
   var feedback = {
     failure:0
   }
-  user = Users.getUser(u.name);
+  
   if (u.original_name != u.name) {
-    if (user.name = "notarealuser") {
-      Users.createUser(u.name, u.pswd, u.first,u.last)
-      Users.deleteUser(u.original_name)
-    } else {
-      res.status(200);
-      res.setHeader('Content-Type', 'text/html')
-      res.render('user_details', {user:Users.getUser(u.original_name), feedback:feedback});
-    }
+    Users.getUser(u.name, function(user) {
+      if (user.name == "notarealuser") {
+        Users.getUser(u.original_name, function(original_user) {
+          var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last]
+          Users.updateUser(u.original_name, user_array, function(){
+            res.status(200);
+            res.setHeader('Content-Type', 'text/html')
+            res.render('user_details', {user:u, feedback:feedback});
+          });
+        });  
+      } else {
+        Users.getUser(u.original_name, function(user){
+          feedback["failure"] = 10;
+          res.status(200);
+          res.setHeader('Content-Type', 'text/html')
+          res.render('user_details', {user:user, feedback:feedback});
+        })  
+      }
+    });
   } else {
-    Users.updateUser(u.original_name, "pswd", u.pswd);
-    Users.updateUser(u.first, "first", u.first);
-    Users.updateUser(u.last, "last", u.last);
+      Users.getUser(u.original_name, function(original_user) {
+        var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last]
+        Users.updateUser(u.original_name, user_array, function(){
+          res.status(200);
+          res.setHeader('Content-Type', 'text/html')
+          res.render('user_details', {user:u, feedback:feedback});
+        });
+      });  
   }
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u, feedback:feedback});
 })
 
 router.get('/:user/results', function(request, response){
