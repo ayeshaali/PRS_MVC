@@ -56,7 +56,7 @@
     </div>
   </div>
   <% include global/footer %>
-  <script src="scripts/scripts.js"></script>
+  <script src="../scripts/scripts.js"></script>
   <script>
     var villain = $( "#villains" ).val()
     if (villain == "error") {
@@ -71,7 +71,7 @@
         $("#villain_img").hide();
       } else {
         $("#villain_img").show();
-        $("#villain_img").attr("src", "images/"+villain.toLowerCase()+"_waiting.svg");
+        $("#villain_img").attr("src", "../images/"+villain.toLowerCase()+"_waiting.svg");
         $("#throw_choice").css("padding-bottom", "0em");
       }
     });

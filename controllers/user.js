@@ -4,6 +4,57 @@ var router = express.Router();
 var Users = require('../models/User');
 var DataJS = require('../models/data');
 var Villains = require('../models/Villain');
+var userName;
+var userPSWD;
+
+//login request; renders either index if password is wrong or game if new user created or correct login entered
+router.get('/users/game', function(request, response){
+  Users.changeColors();
+  //set up data
+  var user_data={
+    name: request.query.player_name,
+    pswd: request.query.pswd
+  };
+  userName = user_data["name"];
+  userPSWD = user_data["pswd"];
+  Users.getUser(userName, function(user_data){
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+      console.log(user_data["name"]);
+      response.render('index', {page:request.url, user:user_data, title:"Index"});
+    } else if (user_data.pswd == userPSWD) {
+      response.render('game', {page:request.url, user:user_data, title:"index"});
+    } else {
+      user_data["failure"] = 4;
+      userName = "";
+      userPSWD = "";
+      response.render('index', {page:request.url, user:user_data, title:"Index"});
+    }
+  });
+});
+
+router.get('/playAgain', function(request, response){
+  //use the saved username and password which resets when you return to login page
+  var user_data={};
+  user_data["name"] = userName;
+  user_data["pswd"] = userPSWD;
+  // var csv_data = dataJS.loadCSV("data/users.csv");
+  //if the saved username is empty than return to index page
+  if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    response.render('index', {page:request.url, user:user_data, title:"Index"});
+  } else {
+    response.render('game', {page:request.url, user:user_data, title:"playGame"});
+  }
+});
+
+router.get('/error', function(request, response){
+  //use the saved username and password which resets when you return to login page
+  var user_data={};
+  user_data["name"] = userName;
+  user_data["pswd"] = userPSWD;
+  response.render('game', {page:request.url, user:user_data, title:"error"});
+});
 
 router.get('/user/new', function(req, res){
   var u;
@@ -112,8 +163,8 @@ router.put('/user/:id', function (req, res) {
           res.render('user_details', {user:u, feedback:feedback});
         });
       });  
-  }
-})
+    }
+});
 
 router.get('/user/:id/results', function(request, response){
   var user_data={
