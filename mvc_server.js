@@ -45,10 +45,6 @@ app.get('/', function(request, response){
   response.render('index', {page:request.url, user:user_data, title:"Index"});
 });
 
-
-//request for when user wants to play again; basically exactly the same as the login request w/o having to log in again
-
-
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){
   user_data = {}

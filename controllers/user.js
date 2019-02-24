@@ -34,6 +34,7 @@ router.get('/users/game', function(request, response){
   });
 });
 
+//request for when user wants to play again; basically exactly the same as the login request w/o having to log in again
 router.get('/playAgain', function(request, response){
   //use the saved username and password which resets when you return to login page
   var user_data={};
@@ -48,6 +49,7 @@ router.get('/playAgain', function(request, response){
   }
 });
 
+//request for when user does not choose a valid weapon or villain
 router.get('/error', function(request, response){
   //use the saved username and password which resets when you return to login page
   var user_data={};
@@ -56,6 +58,7 @@ router.get('/error', function(request, response){
   response.render('game', {page:request.url, user:user_data, title:"error"});
 });
 
+//request for when user clicks create account
 router.get('/user/new', function(req, res){
   var u;
   var feedback = {
@@ -66,6 +69,7 @@ router.get('/user/new', function(req, res){
   res.render('user_details', {user:u, feedback:feedback});
 });
 
+//request for when user creates an account
 router.post('/users',function(req,res){
   console.log('POST Request- /Users');
   var u = {
@@ -91,6 +95,7 @@ router.post('/users',function(req,res){
   });
 });
 
+//request for when user chooses to edit account after logging in
 router.get('/user/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
   var feedback = {
@@ -103,6 +108,7 @@ router.get('/user/:id/edit', function(req, res){
   });
 });
 
+//request for when user chooses to delete account
 router.delete('/user/:id', function (req, res) {
   console.log('DELETE Request-');
   Users.deleteUser(req.params.id, function(){
@@ -112,6 +118,7 @@ router.delete('/user/:id', function (req, res) {
   });
 })
 
+//request for when user updates account
 router.put('/user/:id', function (req, res) {
   var u = {
     original_name: req.params.id,
@@ -166,6 +173,7 @@ router.put('/user/:id', function (req, res) {
     }
 });
 
+//game handling
 router.get('/user/:id/results', function(request, response){
   var user_data={
     name: request.params.id,
