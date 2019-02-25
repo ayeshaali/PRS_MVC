@@ -2,6 +2,7 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var userJS = require(__dirname +'/User');
 
+//gets a villain
 exports.getVillain = function(villain_id, callback) {
   var user;
   dataJS.loadGoogle(2, function(all_users) {
@@ -15,9 +16,45 @@ exports.getVillain = function(villain_id, callback) {
   });
 }
 
+//updates a villain's data
 exports.updateVillain = function(villain_id, updates, callback) {
   dataJS.updateRow(1, villain_id, updates, callback)
 }
+
+//changes the villains' colors
+exports.changeColors = function(){
+  var svgNames=["the_boss","the_magician","harry","gato","bones","manny","comic_hans","mickey","pixie","regal","spock","mr_modern"];
+  var colors=["red","blue","green","white","olive","yellow","orange","purple", "navy", "gray", "fuchsia", "lime"];
+  var svgExtensions=["_waiting","_rock","_scissors","_paper"];
+  var tempColors=colors.slice(0);
+  for (var k=0;k<svgNames.length;k++){
+    var index =Math.floor(Math.random()*tempColors.length);
+    chosenColor=tempColors[index];
+    for (var j=0; j<svgExtensions.length;j++){
+      svgName="./public/images/"+svgNames[k]+svgExtensions[j]+".svg";
+      if(!svgName.includes("regal_waiting")){
+        var svgToEdit=fs.readFileSync(svgName, "utf8");
+        var out=svgToEdit.split("fill");
+        var output=out[0];
+        for(var i=1;i<out.length;i++){
+          output+="fill:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
+        }
+        fs.writeFileSync(svgName,output, "utf8");
+      } else {
+        var svgToEdit=fs.readFileSync(svgName, "utf8");
+        var out=svgToEdit.split("stroke:");
+        var output=out[0];
+        //console.log(out);
+        for(var i=1;i<out.length;i++){
+          output+="stroke:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
+        }
+        fs.writeFileSync(svgName,output, "utf8");
+      }
+    }
+    tempColors.splice(index,1)
+  }
+}
+
 
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){

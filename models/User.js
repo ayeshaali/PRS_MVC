@@ -2,6 +2,7 @@ var fs = require("fs");
 var dataJS = require(__dirname +'/data');
 var villainJS = require(__dirname +'/Villain');
 
+//gets a user
 exports.getUser = function(user_id, callback) {
   var user = createBlankUser();
   var all_users = dataJS.loadGoogle(1, function(all_users) {
@@ -15,6 +16,8 @@ exports.getUser = function(user_id, callback) {
   });
 }
 
+
+//creates a user
 exports.createUser = function(user_id, user_password,first_name,last_name, callback) {
     var result = true;
     var feedbackN = 0;
@@ -31,6 +34,8 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       }
       
       if (result) {
+          var d = new Date();
+          var date=""+d.getDay()+" "+d.getMonth()+" "+d.getDate().addsuffix+", "+ d.getFullYear;
         var new_obj = {
           "name": user_id,
           "pswd": user_password,
@@ -41,7 +46,9 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
           "paper": 0,
           "scissors": 0,
           "first": first_name,
-          "last": last_name
+          "last": last_name,
+            "creation": date,
+            "update": date 
         }
         dataJS.createRow(new_obj, function(){
           console.log("Calling second callback")
@@ -53,14 +60,33 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
     })
 }
 
+function addsuffix(i) {
+    var a=i%100;
+    if (a==11||a==12||a==13){
+        return i+"th";
+    }
+    switch(i%10){
+        case 1:
+            return i+"st";
+        case 2:
+            return i+"nd";
+        case 3: 
+            return i+"nd"
+    }
+    return i+"th";
+}
+
+//deletes a user
 exports.deleteUser = function(user_id, callback) {
   dataJS.deleteRow(user_id, callback)
 }
 
+//updates the date for a user
 exports.updateUser = function(user_id, updates, callback) {
   dataJS.updateRow(0, user_id, updates, callback)
 }
 
+//handles a throw
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){
     villainWeapon=villainJS.villainStrategies(villain,villainPrevious,userPrevious,userWeapon);
     var result = [];
@@ -82,39 +108,8 @@ exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevio
     fs.writeFileSync("data/userPrevious.txt",userWeapon,'utf8')
 }
 
-exports.changeColors = function(){
-  var svgNames=["the_boss","the_magician","harry","gato","bones","manny","comic_hans","mickey","pixie","regal","spock","mr_modern"];
-  var colors=["red","blue","green","white","olive","yellow","orange","purple", "navy", "gray", "fuchsia", "lime"];
-  var svgExtensions=["_waiting","_rock","_scissors","_paper"];
-  var tempColors=colors.slice(0);
-  for (var k=0;k<svgNames.length;k++){
-    var index =Math.floor(Math.random()*tempColors.length);
-    chosenColor=tempColors[index];
-    for (var j=0; j<svgExtensions.length;j++){
-      svgName="./public/images/"+svgNames[k]+svgExtensions[j]+".svg";
-      if(!svgName.includes("regal_waiting")){
-        var svgToEdit=fs.readFileSync(svgName, "utf8");
-        var out=svgToEdit.split("fill");
-        var output=out[0];
-        for(var i=1;i<out.length;i++){
-          output+="fill:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
-        }
-        fs.writeFileSync(svgName,output, "utf8");
-      } else {
-        var svgToEdit=fs.readFileSync(svgName, "utf8");
-        var out=svgToEdit.split("stroke:");
-        var output=out[0];
-        //console.log(out);
-        for(var i=1;i<out.length;i++){
-          output+="stroke:"+chosenColor+out[i].substring(out[i].indexOf('"'),out[i].length);
-        }
-        fs.writeFileSync(svgName,output, "utf8");
-      }
-    }
-    tempColors.splice(index,1)
-  }
-}
 
+//bug testing (creates blank user)
 var createBlankUser= function(){
   var user={
     name:"notarealuser",

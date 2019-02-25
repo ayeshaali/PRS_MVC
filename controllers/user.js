@@ -9,7 +9,7 @@ var userPSWD;
 
 //login request; renders either index if password is wrong or game if new user created or correct login entered
 router.get('/users/game', function(request, response){
-  Users.changeColors();
+  Villains.changeColors();
   //set up data
   var user_data={
     name: request.query.player_name,

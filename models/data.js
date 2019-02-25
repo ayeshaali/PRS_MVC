@@ -40,6 +40,7 @@ exports.updateRow=function(filename, userName, newStuff, callback){
   });
 }
 
+// creates a new row (when making a new user)
 exports.createRow = function(obj, callback) {
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
@@ -50,6 +51,7 @@ exports.createRow = function(obj, callback) {
   });
 }
 
+// deletes a row (when deleting a user)
 exports.deleteRow = function(user_id, callback) {
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
