@@ -58,7 +58,7 @@ exports.deleteUser = function(user_id, callback) {
 }
 
 exports.updateUser = function(user_id, updates, callback) {
-  dataJS.updateCell(0, user_id, updates, callback)
+  dataJS.updateRow(0, user_id, updates, callback)
 }
 
 exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevious, userPrevious){

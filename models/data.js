@@ -13,7 +13,8 @@ exports.loadGoogle = function(filename, callback) {
   });
 }
 
-exports.updateCell=function(filename, userName, newStuff, callback){
+//Updates a row
+exports.updateRow=function(filename, userName, newStuff, callback){
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
     doc.getInfo(function(err,info){

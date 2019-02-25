@@ -16,7 +16,7 @@ exports.getVillain = function(villain_id, callback) {
 }
 
 exports.updateVillain = function(villain_id, updates, callback) {
-  dataJS.updateCell(1, villain_id, updates, callback)
+  dataJS.updateRow(1, villain_id, updates, callback)
 }
 
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
