@@ -58,7 +58,13 @@ app.get('/stats', function(request, response){
   dataJS.loadGoogle(1, function(user_data){
     dataJS.loadGoogle(2, function(villain_data){
       var data = {};
+        user_data.sort(function(a,b) {var bPercent = 0;if (b.total_games == 0) {bPercent = 0;  } else {bPercent =Math.round((b.wins/b.total_games)*100); } var aPercent = 0; if (a.total_games == 0) { aPercent = 0; } else {aPercent =Math.round((a.wins/a.total_games)*100);}return (bPercent-aPercent); });
+        
+        
       data["player"] = user_data;
+        
+     villain_data.sort(function(a,b) {var bPercent = 0;if (b.total_games == 0) {bPercent = 0;  } else {bPercent =Math.round((b.wins/b.total_games)*100); } var aPercent = 0; if (a.total_games == 0) { aPercent = 0; } else {aPercent =Math.round((a.wins/a.total_games)*100);}return (bPercent-aPercent); });
+    
       data["villain"] = villain_data;
       console.log(user_data);
       response.status(200);
