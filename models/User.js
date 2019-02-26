@@ -63,9 +63,12 @@ exports.returnDate=function(){
 }
 function returnDate(){
     var d=new Date(); 
-    var day=["Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday"][d.getDay()];
+    var day=["Sunday","Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday"][d.getDay()];
     var month=["January","February","March","April", "May", "June","July","August","September", "October", "November","December"][d.getMonth()];
-    return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+    return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+fix(d.getMinutes())+":"+fix(d.getSeconds()));
+}
+function fix(n){
+    return ("0" + n).slice(-2);
 }
 function addsuffix(i) {
     var a=i%100;
