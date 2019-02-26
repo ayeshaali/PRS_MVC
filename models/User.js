@@ -58,7 +58,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       }
     })
 }
-exports.returnDate(){
+exports.returnDate=function(){
     return returnDate();
 }
 function returnDate(){
