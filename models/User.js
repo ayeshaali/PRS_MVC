@@ -34,8 +34,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       }
 
       if (result) {
-          var d = new Date();
-          var date=""+d.getDay()+" "+d.getMonth()+" "+addsuffix(d.getDate())+", "+ d.getFullYear();
+        date=returnDate();
         var new_obj = {
           "name": user_id,
           "pswd": user_password,
@@ -59,7 +58,15 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       }
     })
 }
-
+exports.returnDate(){
+    return returnDate();
+}
+function returnDate(){
+    var d=new Date(); 
+    var day=["Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday"][d.getDay()];
+    var month=["January","February","March","April", "May", "June","July","August","September", "October", "November","December"][d.getMonth()];
+    return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+}
 function addsuffix(i) {
     var a=i%100;
     if (a==11||a==12||a==13){
