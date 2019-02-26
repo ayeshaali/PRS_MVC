@@ -8,17 +8,17 @@
 
 <body>
   <% include global/header %>
-    
+
   <div id="feedback" class = "<%if (title == "error") {%>negative<%} else {%>positive<%}%>">
-    <%if (title == "playGame") {%> 
-      Play the Game! 
+    <%if (title == "playGame") {%>
+      Play the Game!
     <%} else if (title == "error") {%>
       Please enter a valid weapon and villain!
     <%} else {%>
       Successfully Logged In!
-    <%}%> 
+    <%}%>
   </div>
-    
+
   <div id="throw_choice">
     <img id="martin atkinson" src="" height=300; width=300; style = "position: relative; float: left; z-index:1000; left:6%; padding-top:5%">
     <div style = "position: relative; left:-11%">
@@ -62,9 +62,9 @@
     if (villain == "error") {
       $("#villain_img").hide();
     } else{
-    
+
     }
-    
+
     $("#villains").change(function(){
       var villain = $( "#villains" ).val()
       if (villain == "error") {
