@@ -35,7 +35,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       
       if (result) {
           var d = new Date();
-          var date=""+d.getDay()+" "+d.getMonth()+" "+d.getDate().addsuffix+", "+ d.getFullYear;
+          var date=""+d.getDay()+" "+d.getMonth()+" "+d.getDate().addsuffix()+", "+ d.getFullYear();
         var new_obj = {
           "name": user_id,
           "pswd": user_password,
