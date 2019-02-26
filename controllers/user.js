@@ -206,7 +206,7 @@ router.get('/user/:id/results', function(request, response){
           user_obj.losses =parseInt(user_obj.losses)+1
           break;
       }
-      var user_array = [user_obj.name, user_obj.pswd, user_obj.total, user_obj.wins, user_obj.losses, user_obj.rock, user_obj.paper, user_obj.scissors, user_obj.first, user_obj.last]
+      var user_array = [user_obj.name, user_obj.pswd, user_obj.total, user_obj.wins, user_obj.losses, user_obj.rock, user_obj.paper, user_obj.scissors, user_obj.first, user_obj.last, user_obj.creation, user_obj.update]
       Villains.getVillain(user_data.villain, function(villain_obj){
         villain_obj.total =parseInt(villain_obj.total)+1
         villain_obj[user_data["response"]]=parseInt(villain_obj[user_data["response"]])+1
