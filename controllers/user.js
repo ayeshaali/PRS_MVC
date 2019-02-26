@@ -104,7 +104,7 @@ router.get('/user/:id/edit', function(req, res){
   var u = Users.getUser(req.params.id, function(u){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {user:u, feedback:feedback});
+    res.render('user_details', {user:u, feedback:feedback, title:"update"});
   });
 });
 
@@ -138,18 +138,19 @@ router.put('/user/:id', function (req, res) {
       feedbackN = 42;
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
-      res.render('user_details', {user:u, feedback:feedback});
+      res.render('user_details', {user:u, feedback:feedback, title:"update"});
   }
 
   if (u.original_name != u.name) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
         Users.getUser(u.original_name, function(original_user) {
-          var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last]
+          
+          var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, u.creation, ]
           Users.updateUser(u.original_name, user_array, function(){
             res.status(200);
             res.setHeader('Content-Type', 'text/html')
-            res.render('user_details', {user:u, feedback:feedback});
+            res.render('user_details', {user:u, feedback:feedback, title:"update"});
           });
         });
       } else {
@@ -157,7 +158,7 @@ router.put('/user/:id', function (req, res) {
           feedback["failure"] = 10;
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
-          res.render('user_details', {user:user, feedback:feedback});
+          res.render('user_details', {user:user, feedback:feedback, title:"update"});
         })
       }
     });
