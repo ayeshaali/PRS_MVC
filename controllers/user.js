@@ -169,7 +169,7 @@ router.put('/user/:id', function (req, res) {
         Users.updateUser(u.original_name, user_array, function(){
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
-          res.render('user_details', {user:u, feedback:feedback});
+          res.render('user_details', {user:u, feedback:feedback, title:"update"});
         });
       });
     }
