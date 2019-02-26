@@ -145,8 +145,8 @@ router.put('/user/:id', function (req, res) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
         Users.getUser(u.original_name, function(original_user) {
-          
-          var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, u.creation, ]
+          var date = Users.returnDate();
+          var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, u.creation, date]
           Users.updateUser(u.original_name, user_array, function(){
             res.status(200);
             res.setHeader('Content-Type', 'text/html')
@@ -164,7 +164,8 @@ router.put('/user/:id', function (req, res) {
     });
   } else {
       Users.getUser(u.original_name, function(original_user) {
-        var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last]
+        var date = Users.returnDate();
+        var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, u.creation, date]
         Users.updateUser(u.original_name, user_array, function(){
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
