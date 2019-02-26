@@ -150,7 +150,9 @@ router.put('/user/:id', function (req, res) {
           Users.updateUser(u.original_name, user_array, function(){
             res.status(200);
             res.setHeader('Content-Type', 'text/html')
-            res.render('user_details', {user:u, feedback:feedback, title:"update"});
+            Users.getUser(u.name, function(user){
+              res.render('user_details', {user:user, feedback:feedback, title:"update"});
+            })
           });
         });
       } else {
@@ -169,7 +171,9 @@ router.put('/user/:id', function (req, res) {
         Users.updateUser(u.original_name, user_array, function(){
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
-          res.render('user_details', {user:u, feedback:feedback, title:"update"});
+          Users.getUser(u.original_name, function(user) {
+            res.render('user_details', {user:user, feedback:feedback, title:"update"});
+          })
         });
       });
     }
