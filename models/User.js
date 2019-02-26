@@ -26,16 +26,16 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
         result= false;
         feedbackN = 42;
     }
-    
+
     exports.getUser(user_id, function(user){
       if (user.name != "notarealuser") {
         result = false;
         feedbackN = 10;
       }
-      
+
       if (result) {
           var d = new Date();
-          var date=""+d.getDay()+" "+d.getMonth()+" "+d.getDate().addsuffix()+", "+ d.getFullYear();
+          var date=""+d.getDay()+" "+d.getMonth()+" "+addsuffix(d.getDate())+", "+ d.getFullYear();
         var new_obj = {
           "name": user_id,
           "pswd": user_password,
@@ -48,7 +48,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
           "first": first_name,
           "last": last_name,
             "creation": date,
-            "update": date 
+            "update": date
         }
         dataJS.createRow(new_obj, function(){
           console.log("Calling second callback")
@@ -70,7 +70,7 @@ function addsuffix(i) {
             return i+"st";
         case 2:
             return i+"nd";
-        case 3: 
+        case 3:
             return i+"nd"
     }
     return i+"th";

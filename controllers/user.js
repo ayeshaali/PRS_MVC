@@ -66,7 +66,7 @@ router.get('/user/new', function(req, res){
   }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u, feedback:feedback});
+  res.render('user_details', {user:u, feedback:feedback, title:"create"});
 });
 
 //request for when user creates an account
@@ -90,7 +90,7 @@ router.post('/users',function(req,res){
       feedback["failure"] = feedbackN;
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
-      res.render('user_details', {user:u, feedback:feedback});
+      res.render('user_details', {user:u, feedback:feedback, title:"create"});
     }
   });
 });
@@ -131,7 +131,7 @@ router.put('/user/:id', function (req, res) {
   var feedback = {
     failure:0
   }
-  
+
   if (u.name==null||u.name==""||u.pswd==null||u.pswd==""||u.first==null||u.first==""||u.last==null||u.last==""){
       console.log("inv");
       result= false;
@@ -140,7 +140,7 @@ router.put('/user/:id', function (req, res) {
       res.setHeader('Content-Type', 'text/html')
       res.render('user_details', {user:u, feedback:feedback});
   }
-  
+
   if (u.original_name != u.name) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
@@ -151,14 +151,14 @@ router.put('/user/:id', function (req, res) {
             res.setHeader('Content-Type', 'text/html')
             res.render('user_details', {user:u, feedback:feedback});
           });
-        });  
+        });
       } else {
         Users.getUser(u.original_name, function(user){
           feedback["failure"] = 10;
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
           res.render('user_details', {user:user, feedback:feedback});
-        })  
+        })
       }
     });
   } else {
@@ -169,7 +169,7 @@ router.put('/user/:id', function (req, res) {
           res.setHeader('Content-Type', 'text/html')
           res.render('user_details', {user:u, feedback:feedback});
         });
-      });  
+      });
     }
 });
 
@@ -202,7 +202,7 @@ router.get('/user/:id/results', function(request, response){
           break;
         case "lost":
           user_obj.losses =parseInt(user_obj.losses)+1
-          break;  
+          break;
       }
       var user_array = [user_obj.name, user_obj.pswd, user_obj.total, user_obj.wins, user_obj.losses, user_obj.rock, user_obj.paper, user_obj.scissors, user_obj.first, user_obj.last]
       Villains.getVillain(user_data.villain, function(villain_obj){
@@ -214,7 +214,7 @@ router.get('/user/:id/results', function(request, response){
               break;
             case "lost":
               villain_obj.wins = parseInt(villain_obj.wins)+1
-              break;  
+              break;
           }
         var villain_array = [villain_obj.name, villain_obj.total, villain_obj.wins, villain_obj.losses, villain_obj.rock, villain_obj.paper, villain_obj.scissors]
 
@@ -224,7 +224,7 @@ router.get('/user/:id/results', function(request, response){
             response.setHeader('Content-Type', 'text/html')
             response.render('results',{page:request.url, user:user_data, title:"results"});
           });
-        });  
+        });
       });
     });
   }
