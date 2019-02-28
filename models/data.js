@@ -125,3 +125,31 @@ exports.increment=function(page){
       });
   });
 }
+
+exports.loadUsage=function(callback){
+    arr=[0,0,0,0,0,0,0];
+    doc.useServiceAccountAuth(creds, function (err) {
+        doc.getInfo(function(err,info){
+        sheet=info.worksheets[2];
+            
+        sheet.getCells({
+        'min-col': 4,
+        'max-col': 10,
+        'return-empty': true}, function(err, cells) {
+            for(var i=0; i<7;i++){
+            var a=0;
+            try{a=parseInt(cells[7+i].value); console.log("YESSSSSSSSSSSSSSSSSSSSSSSS")}
+            catch(ErrorEvent){}
+            if(isNaN(a)){
+                a=0;
+            }
+            arr[i]=a;
+            }
+            callback(arr);  
+      });
+            
+      });
+         
+  });
+   
+}

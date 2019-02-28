@@ -90,6 +90,27 @@
  <% } %>
       <%}%>
     </table>
+       <h3>Access Stats</h3>
+      <table class = "cinereousTable">
+          <tr>
+        <th class="top_row">index</th>
+        <th class="top_row">game</th>
+        <th class="top_row">results</th>
+        <th class="top_row">rules</th>
+        <th class="top_row">stats</th>
+        <th class="top_row">about</th>
+        <th class="top_row">user details</th>
+      </tr>
+          <tr>
+          <td><%=user.usage[0]%></td>
+        <td><%=user.usage[1]%></td>
+        <td><%=user.usage[2]%></td>
+        <td><%=user.usage[3]%></td>
+        <td><%=user.usage[4]%></td>
+        <td><%=user.usage[5]%></td>
+        <td><%=user.usage[6]%></td>
+            </tr>
+      </table>
     <br>
     <form action="/playAgain" method="get">
       <button type="submit" id = "play_again">Play</button>

@@ -60,6 +60,7 @@ app.get('/stats', function(request, response){
     dataJS.increment("stats");
   dataJS.loadGoogle(1, function(user_data){
     dataJS.loadGoogle(2, function(villain_data){
+        dataJS.loadUsage(function(usageData){
       var data = {};
         
         //sorting by win rate
@@ -72,10 +73,13 @@ app.get('/stats', function(request, response){
      villain_data.sort(function(a,b) {var bPercent = 0;if (b.total == 0) {bPercent = 0;  } else {bPercent =Math.round((b.wins/b.total)*100); } var aPercent = 0; if (a.total== 0) { aPercent = 0; } else {aPercent =Math.round((a.wins/a.total)*100);}return (bPercent-aPercent); });
     
       data["villain"] = villain_data;
+        
+        data["usage"]=usageData;
       dataJS.log(user_data);
       response.status(200);
       response.setHeader('Content-Type', 'text/html')
       response.render('stats', {page:request.url, user:data, title:"stats"});
+    });
     });
   });
 });
