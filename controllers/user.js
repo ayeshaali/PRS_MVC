@@ -112,7 +112,7 @@ router.get('/user/:id/edit', function(req, res){
 
 //request for when user chooses to delete account
 router.delete('/user/:id', function (req, res) {
-  dataJS.log("DELETE REQUEST /users/"+req.params.id++" at"+ new Date());
+  dataJS.log("DELETE REQUEST /users/"+req.params.id+" at"+ new Date());
   Users.deleteUser(req.params.id, function(){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
