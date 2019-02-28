@@ -9,7 +9,7 @@ var userPSWD;
 
 //login request; renders either index if password is wrong or game if new user created or correct login entered
 router.get('/users/game', function(request, response){
-  dataJS.log("GET REQUEST /users/game: "+request.query.player_name+" at"+ new Date());
+  dataJS.log("GET REQUEST /users/game: "+request.query.player_name+" at "+ new Date());
   Villains.changeColors();
   //set up data
   var user_data={
@@ -74,7 +74,7 @@ router.get('/user/new', function(req, res){
 
 //request for when user creates an account
 router.post('/users',function(req,res){
-  dataJS.log('POST Request- /Users'+" at"+ new Date());
+  dataJS.log('POST Request- /Users'+" at "+ new Date());
   var u = {
     name: req.body.player_name,
     pswd: req.body.pswd,
@@ -99,7 +99,7 @@ router.post('/users',function(req,res){
 
 //request for when user chooses to edit account after logging in
 router.get('/user/:id/edit', function(req, res){
-  dataJS.log("GET REQUEST /users/"+req.params.id+"/edit"+" at"+ new Date());
+  dataJS.log("GET REQUEST /users/"+req.params.id+"/edit"+" at "+ new Date());
   var feedback = {
     failure:0
   }
@@ -112,7 +112,7 @@ router.get('/user/:id/edit', function(req, res){
 
 //request for when user chooses to delete account
 router.delete('/user/:id', function (req, res) {
-  dataJS.log("DELETE REQUEST /users/"+req.params.id+" at"+ new Date());
+  dataJS.log("DELETE REQUEST /users/"+req.params.id+" at "+ new Date());
   Users.deleteUser(req.params.id, function(){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
@@ -122,7 +122,7 @@ router.delete('/user/:id', function (req, res) {
 
 //request for when user updates account
 router.put('/user/:id', function (req, res) {
-  dataJS.log("PUT REQUEST /users/"+req.params.id+" at"+ new Date());
+  dataJS.log("PUT REQUEST /users/"+req.params.id+" at "+ new Date());
   var u = {
     original_name: req.params.id,
     name: req.body.player_name,
@@ -184,7 +184,7 @@ router.put('/user/:id', function (req, res) {
 
 //game handling
 router.get('/user/:id/results', function(request, response){
-  dataJS.log("GET REQUEST /users/"+request.params.id+"/results"+" at"+ new Date());
+  dataJS.log("GET REQUEST /users/"+request.params.id+"/results"+" at "+ new Date());
   var user_data={
     name: request.params.id,
     pswd: request.params.pswd,
