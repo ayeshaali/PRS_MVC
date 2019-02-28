@@ -48,6 +48,7 @@ app.get('/', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){
+    dataJS.increment("rules");
   user_data = {}
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
