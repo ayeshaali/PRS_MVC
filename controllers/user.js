@@ -240,7 +240,6 @@ router.get('/user/:id/results', function(request, response){
               break;
           }
         var villain_array = [villain_obj.name, villain_obj.total, villain_obj.wins, villain_obj.losses, villain_obj.rock, villain_obj.paper, villain_obj.scissors]
-
         Users.updateUser(user_obj.name, user_array, function(){
           Villains.updateVillain(villain_obj.name, villain_array, function(){
             response.status(200);
