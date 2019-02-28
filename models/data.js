@@ -26,14 +26,14 @@ exports.updateRow=function(filename, userName, newStuff, callback){
         'return-empty': true}, function(err, cells) {
         for(var i=0; i<cells.length;i++){
           if(cells[i].value==userName){
-            sheet.getCells({'min-row': i+1,'max-row': i+1}, 
+            sheet.getCells({'min-row': i+1,'max-row': i+1},
             function(err, cells) {
-              for(var i=0; i<cells.length;i++){   
-                cells[i].setValue(newStuff[i]);                    
+              for(var i=0; i<cells.length;i++){
+                cells[i].setValue(newStuff[i]);
               }
-            });  
-            break;                       
-          }  
+            });
+            break;
+          }
         }
         callback();
       });
@@ -45,7 +45,7 @@ exports.updateRow=function(filename, userName, newStuff, callback){
 exports.createRow = function(obj, callback) {
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
-    doc.addRow(1, obj, function(){ 
+    doc.addRow(1, obj, function(){
       dataJS.log("Calling first callback")
       callback();
     });
@@ -93,7 +93,7 @@ exports.log=function(message){
             var a="";
             try{a=cells[i].value}catch(ErrorEvent){}
             if(a==""){
-          cells[i].setValue(JSON.stringify(message)); 
+          cells[i].setValue(JSON.stringify(message));
                 go=false;
             }else{
             i++;
@@ -104,3 +104,24 @@ exports.log=function(message){
   });
 }
 
+exports.increment=function(page){
+    arr=["index","game","results","rules","stats","about","userDetails"];
+    num=arr.indexOf(page)+4;
+    doc.useServiceAccountAuth(creds, function (err) {
+        doc.getInfo(function(err,info){
+        sheet=info.worksheets[2];
+      sheet.getCells({
+        'min-col': num,
+        'max-col': num,
+        'return-empty': true}, function(err, cells) {
+            var a=0;
+            try{a=parseInt(cells[1].value)}catch(ErrorEvent){}
+            if(a==0){
+          cells[1].setValue(1);
+            }else{
+            cells[1].setValue(a+1);
+            }
+      });
+      });
+  });
+}
