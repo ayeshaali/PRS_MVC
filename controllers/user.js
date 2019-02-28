@@ -186,7 +186,7 @@ router.put('/user/:id', function (req, res) {
 
 //game handling
 router.get('/user/:id/results', function(request, response){
-  dataJS.log("GET REQUEST /users/"+req.params.id+"/results");
+  dataJS.log("GET REQUEST /users/"+request.params.id+"/results");
   var user_data={
     name: request.params.id,
     pswd: request.params.pswd,
