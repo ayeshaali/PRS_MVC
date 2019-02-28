@@ -4,6 +4,7 @@ var userJS = require(__dirname +'/User');
 
 //gets a villain
 exports.getVillain = function(villain_id, callback) {
+  dataJS.log("getVillain: "+villain_id);
   var user;
   dataJS.loadGoogle(2, function(all_users) {
     for(var i=0; i<all_users.length; i++){
@@ -18,6 +19,7 @@ exports.getVillain = function(villain_id, callback) {
 
 //updates a villain's data
 exports.updateVillain = function(villain_id, updates, callback) {
+  dataJS.log("updateVillain: "+villain_id);
   dataJS.updateRow(1, villain_id, updates, callback)
 }
 
@@ -58,6 +60,7 @@ exports.changeColors = function(){
 
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){
+    dataJS.log("villainStrategies: "+villain_id);
     var rand=Math.random();
     var choice=exports.randomChoice();
     switch(villain){

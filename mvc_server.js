@@ -37,6 +37,7 @@ app.listen(port, function(){
 app.use(require('./controllers/user'));
 //first request, renders index
 app.get('/', function(request, response){
+  dataJS.log("GET REQUEST index");
   var user_data={};
   userName = "";
   userPSWD = "";
@@ -47,6 +48,7 @@ app.get('/', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){
+  dataJS.log("GET REQUEST rules");
   user_data = {}
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
@@ -55,19 +57,20 @@ app.get('/rules', function(request, response){
 
 //handles a request for the rules page (inputs the necessary data and sends the user to the newly rendered stats page)
 app.get('/stats', function(request, response){
+  dataJS.log("GET REQUEST stats");
   dataJS.loadGoogle(1, function(user_data){
     dataJS.loadGoogle(2, function(villain_data){
       var data = {};
-        
+
         //sorting by win rate
         user_data.sort(function(a,b) {var bPercent = 0;if (b.total == 0) {bPercent = 0;  } else {bPercent =Math.round((b.wins/b.total)*100); } var aPercent = 0; if (a.total == 0) { aPercent = 0; } else {aPercent =Math.round((a.wins/a.total)*100);}return (bPercent-aPercent); });
-        
-        
+
+
       data["player"] = user_data;
-    
+
         //sorting by win rate
      villain_data.sort(function(a,b) {var bPercent = 0;if (b.total == 0) {bPercent = 0;  } else {bPercent =Math.round((b.wins/b.total)*100); } var aPercent = 0; if (a.total== 0) { aPercent = 0; } else {aPercent =Math.round((a.wins/a.total)*100);}return (bPercent-aPercent); });
-    
+
       data["villain"] = villain_data;
       dataJS.log(user_data);
       response.status(200);
@@ -79,6 +82,7 @@ app.get('/stats', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/about', function(request, response){
+  dataJS.log("GET REQUEST about");
   user_data = {};
   response.status(200);
   response.setHeader('Content-Type', 'text/html')

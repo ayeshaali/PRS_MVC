@@ -4,6 +4,7 @@ var villainJS = require(__dirname +'/Villain');
 
 //gets a user
 exports.getUser = function(user_id, callback) {
+  dataJS.log("getUser: "+user_id);
   var user = createBlankUser();
   var all_users = dataJS.loadGoogle(1, function(all_users) {
     for(var i=0; i<all_users.length; i++){
@@ -19,6 +20,7 @@ exports.getUser = function(user_id, callback) {
 
 //creates a user
 exports.createUser = function(user_id, user_password,first_name,last_name, callback) {
+    dataJS.log("createUser: "+user_id);
     var result = true;
     var feedbackN = 0;
     if (user_id==null||user_id==""||first_name==null||first_name==""||last_name==null||last_name==""||user_password==null||user_password==""){
@@ -62,7 +64,7 @@ exports.returnDate=function(){
     return returnDate();
 }
 function returnDate(){
-    var d=new Date(); 
+    var d=new Date();
     var day=["Sunday","Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday"][d.getDay()];
     var month=["January","February","March","April", "May", "June","July","August","September", "October", "November","December"][d.getMonth()];
     return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+fix(d.getMinutes())+":"+fix(d.getSeconds()));
@@ -88,11 +90,13 @@ function addsuffix(i) {
 
 //deletes a user
 exports.deleteUser = function(user_id, callback) {
+  dataJS.log("deleteUser: "+user_id);
   dataJS.deleteRow(user_id, callback)
 }
 
 //updates the date for a user
 exports.updateUser = function(user_id, updates, callback) {
+  dataJS.log("updateUser: "+user_id);
   dataJS.updateRow(0, user_id, updates, callback)
 }
 
