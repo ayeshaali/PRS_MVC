@@ -57,6 +57,7 @@ app.get('/rules', function(request, response){
 
 //handles a request for the rules page (inputs the necessary data and sends the user to the newly rendered stats page)
 app.get('/stats', function(request, response){
+    dataJS.increment("stats");
   dataJS.loadGoogle(1, function(user_data){
     dataJS.loadGoogle(2, function(villain_data){
       var data = {};
@@ -81,6 +82,7 @@ app.get('/stats', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/about', function(request, response){
+    dataJS.increment("about");
   user_data = {};
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
