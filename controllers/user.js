@@ -122,7 +122,7 @@ router.delete('/user/:id', function (req, res) {
 
 //request for when user updates account
 router.put('/user/:id', function (req, res) {
-  dataJS.log("PUT REQUEST /users/"+req.params.id++" at"+ new Date());
+  dataJS.log("PUT REQUEST /users/"+req.params.id+" at"+ new Date());
   var u = {
     original_name: req.params.id,
     name: req.body.player_name,
