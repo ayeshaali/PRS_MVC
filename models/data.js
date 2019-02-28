@@ -1,5 +1,6 @@
 var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('../client_secret.json');
+var dataJS = require(__dirname +'/data');
 // Create a document object using the ID of the spreadsheet - obtained from its URL.
 var doc = new GoogleSpreadsheet('1DVgMG20OgfLR0leaJvzOiHDxp19EoyGKHTJxUCnxoX0');
 // Authenticate with the Google Spreadsheets API.
@@ -45,7 +46,7 @@ exports.createRow = function(obj, callback) {
   var sheet;
   doc.useServiceAccountAuth(creds, function (err) {
     doc.addRow(1, obj, function(){ 
-      console.log("Calling first callback")
+      dataJS.log("Calling first callback")
       callback();
     });
   });
@@ -74,6 +75,32 @@ exports.deleteRow = function(user_id, callback) {
         }
       });
     });
+  });
+}
+
+exports.log=function(message){
+    console.log(message);
+    doc.useServiceAccountAuth(creds, function (err) {
+        doc.getInfo(function(err,info){
+    sheet=info.worksheets[2];
+      sheet.getCells({
+        'min-col': 1,
+        'max-col': 1,
+        'return-empty': true}, function(err, cells) {
+          go=true;
+          i=0;
+        while (go){
+            var a="";
+            try{a=cells[i].value}catch(ErrorEvent){}
+            if(a==""){
+          cells[i].setValue(JSON.stringify(message)); 
+                go=false;
+            }else{
+            i++;
+            }
+        }
+      });
+      });
   });
 }
 

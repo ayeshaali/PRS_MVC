@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require("fs");
 var router = express.Router();
 var Users = require('../models/User');
-var DataJS = require('../models/data');
+var dataJS = require('../models/data');
 var Villains = require('../models/Villain');
 var userName;
 var userPSWD;
@@ -21,7 +21,7 @@ router.get('/users/game', function(request, response){
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
     if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
-      console.log(user_data["name"]);
+      dataJS.log(user_data["name"]);
       response.render('index', {page:request.url, user:user_data, title:"Index"});
     } else if (user_data.pswd == userPSWD) {
       response.render('game', {page:request.url, user:user_data, title:"index"});
@@ -71,7 +71,7 @@ router.get('/user/new', function(req, res){
 
 //request for when user creates an account
 router.post('/users',function(req,res){
-  console.log('POST Request- /Users');
+  dataJS.log('POST Request- /Users');
   var u = {
     name: req.body.player_name,
     pswd: req.body.pswd,
@@ -83,7 +83,7 @@ router.post('/users',function(req,res){
   }
   Users.createUser(u.name, u.pswd, u.first,u.last, function(result, feedbackN){
     if (result) {
-      console.log("Second callback called")
+      dataJS.log("Second callback called")
       res.redirect('/');
     } else {
       var u;
@@ -97,7 +97,7 @@ router.post('/users',function(req,res){
 
 //request for when user chooses to edit account after logging in
 router.get('/user/:id/edit', function(req, res){
-  console.log('Request- /user/'+req.params.id);
+  dataJS.log('Request- /user/'+req.params.id);
   var feedback = {
     failure:0
   }
@@ -110,7 +110,7 @@ router.get('/user/:id/edit', function(req, res){
 
 //request for when user chooses to delete account
 router.delete('/user/:id', function (req, res) {
-  console.log('DELETE Request-');
+  dataJS.log('DELETE Request-');
   Users.deleteUser(req.params.id, function(){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
@@ -127,13 +127,13 @@ router.put('/user/:id', function (req, res) {
     first: req.body.first,
     last: req.body.last
   }
-  console.log(u);
+  dataJS.log(u);
   var feedback = {
     failure:0
   }
 
   if (u.name==null||u.name==""||u.pswd==null||u.pswd==""||u.first==null||u.first==""||u.last==null||u.last==""){
-      console.log("inv");
+      dataJS.log("inv");
       result= false;
       feedbackN = 42;
       res.status(200);

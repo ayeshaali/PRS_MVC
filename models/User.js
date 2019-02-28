@@ -22,7 +22,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
     var result = true;
     var feedbackN = 0;
     if (user_id==null||user_id==""||first_name==null||first_name==""||last_name==null||last_name==""||user_password==null||user_password==""){
-        console.log("inv");
+        dataJS.log("inv");
         result= false;
         feedbackN = 42;
     }
@@ -50,7 +50,7 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
             "update": date
         }
         dataJS.createRow(new_obj, function(){
-          console.log("Calling second callback")
+          dataJS.log("Calling second callback")
           callback(true, feedbackN);
         })
       } else {
