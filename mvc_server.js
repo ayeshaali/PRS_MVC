@@ -37,7 +37,7 @@ app.listen(port, function(){
 app.use(require('./controllers/user'));
 //first request, renders index
 app.get('/', function(request, response){
-  dataJS.log("GET REQUEST index");
+  dataJS.log("GET REQUEST index at"+ new Date());
   var user_data={};
   userName = "";
   userPSWD = "";
@@ -48,7 +48,7 @@ app.get('/', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/rules', function(request, response){
-  dataJS.log("GET REQUEST rules");
+  dataJS.log("GET REQUEST rules at"+ new Date());
   user_data = {}
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
@@ -57,7 +57,7 @@ app.get('/rules', function(request, response){
 
 //handles a request for the rules page (inputs the necessary data and sends the user to the newly rendered stats page)
 app.get('/stats', function(request, response){
-  dataJS.log("GET REQUEST stats");
+  dataJS.log("GET REQUEST stats at"+ new Date());
   dataJS.loadGoogle(1, function(user_data){
     dataJS.loadGoogle(2, function(villain_data){
       var data = {};
@@ -82,7 +82,7 @@ app.get('/stats', function(request, response){
 
 //handles a request for the rules page (sends the user to the rules page)
 app.get('/about', function(request, response){
-  dataJS.log("GET REQUEST about");
+  dataJS.log("GET REQUEST about at"+ new Date());
   user_data = {};
   response.status(200);
   response.setHeader('Content-Type', 'text/html')

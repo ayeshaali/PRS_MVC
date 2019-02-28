@@ -60,7 +60,7 @@ exports.changeColors = function(){
 
 //calculates the villain's choice of weapon based on the inputs and the villain's possible strategies
 exports.villainStrategies = function(villain,villainPrevious,userPrevious,userCurrent){
-    dataJS.log("villainStrategies: "+villain_id);
+    dataJS.log("villainStrategies: "+villain);
     var rand=Math.random();
     var choice=exports.randomChoice();
     switch(villain){
