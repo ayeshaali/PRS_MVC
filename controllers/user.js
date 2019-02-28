@@ -23,13 +23,16 @@ router.get('/users/game', function(request, response){
     response.setHeader('Content-Type', 'text/html')
     if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
       dataJS.log(user_data["name"]);
+      dataJS.increment("index")
       response.render('index', {page:request.url, user:user_data, title:"Index"});
     } else if (user_data.pswd == userPSWD) {
+      dataJS.increment("game")
       response.render('game', {page:request.url, user:user_data, title:"index"});
     } else {
       user_data["failure"] = 4;
       userName = "";
       userPSWD = "";
+      dataJS.increment("index")
       response.render('index', {page:request.url, user:user_data, title:"Index"});
     }
   });
@@ -45,8 +48,10 @@ router.get('/playAgain', function(request, response){
   // var csv_data = dataJS.loadCSV("data/users.csv");
   //if the saved username is empty than return to index page
   if (user_data["name"] == "") {//if someone accidentally submits login w/o entering anything
+    dataJS.increment("index")
     response.render('index', {page:request.url, user:user_data, title:"Index"});
   } else {
+    dataJS.increment("game")
     response.render('game', {page:request.url, user:user_data, title:"playGame"});
   }
 });
@@ -57,6 +62,7 @@ router.get('/error', function(request, response){
   var user_data={};
   user_data["name"] = userName;
   user_data["pswd"] = userPSWD;
+  dataJS.increment("game")
   response.render('game', {page:request.url, user:user_data, title:"error"});
 });
 
@@ -69,6 +75,7 @@ router.get('/user/new', function(req, res){
   }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
+  dataJS.increment("user_details")
   res.render('user_details', {user:u, feedback:feedback, title:"create"});
 });
 
@@ -92,6 +99,7 @@ router.post('/users',function(req,res){
       feedback["failure"] = feedbackN;
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
+      dataJS.increment("user_details")
       res.render('user_details', {user:u, feedback:feedback, title:"create"});
     }
   });
@@ -106,6 +114,7 @@ router.get('/user/:id/edit', function(req, res){
   var u = Users.getUser(req.params.id, function(u){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
+    dataJS.increment("user_details")
     res.render('user_details', {user:u, feedback:feedback, title:"update"});
   });
 });
@@ -141,6 +150,7 @@ router.put('/user/:id', function (req, res) {
       feedbackN = 42;
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
+      dataJS.increment("user_details")
       res.render('user_details', {user:u, feedback:feedback, title:"update"});
   }
 
@@ -154,6 +164,7 @@ router.put('/user/:id', function (req, res) {
             res.status(200);
             res.setHeader('Content-Type', 'text/html')
             Users.getUser(u.name, function(user){
+              dataJS.increment("user_details")
               res.render('user_details', {user:user, feedback:feedback, title:"update"});
             })
           });
@@ -163,6 +174,7 @@ router.put('/user/:id', function (req, res) {
           feedback["failure"] = 10;
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
+          dataJS.increment("user_details")
           res.render('user_details', {user:user, feedback:feedback, title:"update"});
         })
       }
@@ -175,6 +187,7 @@ router.put('/user/:id', function (req, res) {
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
           Users.getUser(u.original_name, function(user) {
+            dataJS.increment("user_details")
             res.render('user_details', {user:user, feedback:feedback, title:"update"});
           })
         });
@@ -232,6 +245,7 @@ router.get('/user/:id/results', function(request, response){
           Villains.updateVillain(villain_obj.name, villain_array, function(){
             response.status(200);
             response.setHeader('Content-Type', 'text/html')
+            dataJS.increment("results")
             response.render('results',{page:request.url, user:user_data, title:"results"});
           });
         });
