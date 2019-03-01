@@ -112,6 +112,7 @@ router.get('/user/:id/edit', function(req, res){
     failure:0
   }
   var u = Users.getUser(req.params.id, function(u){
+    console.log(u)
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     dataJS.increment("user_details")
@@ -158,6 +159,7 @@ router.put('/user/:id', function (req, res) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
         Users.getUser(u.original_name, function(original_user) {
+          console.log(original_user);
           var date = Users.returnDate();
           var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
           Users.updateUser(u.original_name, user_array, function(){
@@ -170,6 +172,7 @@ router.put('/user/:id', function (req, res) {
       })
   } else {
       Users.getUser(u.original_name, function(original_user) {
+        console.log(original_user);
         var date = Users.returnDate();
         var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
         Users.updateUser(u.original_name, user_array, function(){

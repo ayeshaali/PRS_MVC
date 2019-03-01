@@ -97,7 +97,9 @@ exports.deleteUser = function(user_id, callback) {
 //updates the date for a user
 exports.updateUser = function(user_id, updates, callback) {
   dataJS.log("updateUser: "+user_id+" at "+ new Date());
-  dataJS.updateRow(0, user_id, updates, callback)
+  dataJS.updateRow(0, user_id, updates, function(){
+    callback();
+  });
 }
 
 //handles a throw
