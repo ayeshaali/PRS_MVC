@@ -17,7 +17,6 @@ exports.getUser = function(user_id, callback) {
   });
 }
 
-
 //creates a user
 exports.createUser = function(user_id, user_password,first_name,last_name, callback) {
     dataJS.log("createUser: "+user_id+" at "+ new Date());
@@ -60,33 +59,6 @@ exports.createUser = function(user_id, user_password,first_name,last_name, callb
       }
     })
 }
-exports.returnDate=function(){
-    return returnDate();
-}
-function returnDate(){
-    var d=new Date();
-    var day=["Sunday","Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday"][d.getDay()];
-    var month=["January","February","March","April", "May", "June","July","August","September", "October", "November","December"][d.getMonth()];
-    return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+fix(d.getMinutes())+":"+fix(d.getSeconds()));
-}
-function fix(n){
-    return ("0" + n).slice(-2);
-}
-function addsuffix(i) {
-    var a=i%100;
-    if (a==11||a==12||a==13){
-        return i+"th";
-    }
-    switch(i%10){
-        case 1:
-            return i+"st";
-        case 2:
-            return i+"nd";
-        case 3:
-            return i+"nd"
-    }
-    return i+"th";
-}
 
 //deletes a user
 exports.deleteUser = function(user_id, callback) {
@@ -126,6 +98,33 @@ exports.handleThrow = function(userWeapon, villain, villainWeapon, villainPrevio
     fs.writeFileSync("data/userPrevious.txt",userWeapon,'utf8')
 }
 
+exports.returnDate=function(){
+    return returnDate();
+}
+function returnDate(){
+    var d=new Date();
+    var day=["Sunday","Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday"][d.getDay()];
+    var month=["January","February","March","April", "May", "June","July","August","September", "October", "November","December"][d.getMonth()];
+    return (""+day+" "+month+" "+addsuffix(d.getDate())+", "+ d.getFullYear()+"  "+d.getHours()+":"+fix(d.getMinutes())+":"+fix(d.getSeconds()));
+}
+function fix(n){
+    return ("0" + n).slice(-2);
+}
+function addsuffix(i) {
+    var a=i%100;
+    if (a==11||a==12||a==13){
+        return i+"th";
+    }
+    switch(i%10){
+        case 1:
+            return i+"st";
+        case 2:
+            return i+"nd";
+        case 3:
+            return i+"nd"
+    }
+    return i+"th";
+}
 
 //bug testing (creates blank user)
 var createBlankUser= function(){
