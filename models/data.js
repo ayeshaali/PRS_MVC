@@ -35,6 +35,7 @@ exports.updateRow=function(filename, userName, newStuff, callback){
             break;
           }
         }
+        console.log("doing callback");
         callback();
       });
     });
