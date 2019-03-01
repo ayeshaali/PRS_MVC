@@ -163,19 +163,19 @@ router.put('/user/:id', function (req, res) {
           Users.updateUser(u.original_name, user_array, function(){
             res.status(200);
             res.setHeader('Content-Type', 'text/html')
-            Users.getUser(u.name, function(user){
+            Users.getUser(u.name, function(tjret){
               dataJS.increment("user_details")
-              res.render('user_details', {user:user, feedback:feedback, title:"update"});
+              res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
             })
           });
         });
       } else {
-        Users.getUser(u.original_name, function(user){
+        Users.getUser(u.original_name, function(tjret){
           feedback["failure"] = 10;
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
           dataJS.increment("user_details")
-          res.render('user_details', {user:user, feedback:feedback, title:"update"});
+          res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
         })
       }
     });
@@ -186,9 +186,9 @@ router.put('/user/:id', function (req, res) {
         Users.updateUser(u.original_name, user_array, function(){
           res.status(200);
           res.setHeader('Content-Type', 'text/html')
-          Users.getUser(u.original_name, function(user) {
+          Users.getUser(u.original_name, function(tjret) {
             dataJS.increment("user_details")
-            res.render('user_details', {user:user, feedback:feedback, title:"update"});
+            res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
           })
         });
       });
