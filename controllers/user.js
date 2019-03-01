@@ -163,12 +163,18 @@ router.put('/user/:id', function (req, res) {
           var date = Users.returnDate();
           var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
           Users.updateUser(u.original_name, user_array, function(){
-              res.redirect("/user/"+u.name+"/edit");
-              var new_user_obj
+              res.status(200);
+            res.setHeader('Content-Type', 'text/html')
+            dataJS.increment("user_details")
+            res.render('user_details', {user:u, feedback:feedback, title:"update"});
           });
         });
       } else {
-          res.redirect("/user/"+u.original_name+"/edit");
+           res.status(200);
+            res.setHeader('Content-Type', 'text/html')
+            dataJS.increment("user_details")
+            u.name=u.original_name;
+            res.render('user_details', {user:u, feedback:feedback, title:"update"});
         }
       })
   } else {
@@ -177,7 +183,10 @@ router.put('/user/:id', function (req, res) {
         var date = Users.returnDate();
         var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
         Users.updateUser(u.original_name, user_array, function(){
-          res.redirect("/user/"+u.original_name+"/edit");
+           res.status(200);
+            res.setHeader('Content-Type', 'text/html')
+            dataJS.increment("user_details")
+            res.render('user_details', {user:u, feedback:feedback, title:"update"});
         });
       });
     }
