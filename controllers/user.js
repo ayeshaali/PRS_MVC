@@ -144,36 +144,38 @@ router.put('/user/:id', function (req, res) {
   var feedback = {
     failure:0
   }
-
+  
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html')
+  
   if (u.name==null||u.name==""||u.pswd==null||u.pswd==""||u.first==null||u.first==""||u.last==null||u.last==""){
       dataJS.log("inv");
       result= false;
-      feedbackN = 42;
-      res.status(200);
-      res.setHeader('Content-Type', 'text/html')
-      dataJS.increment("user_details")
-      res.render('user_details', {user:u, feedback:feedback, title:"update"});
+      feedback["failure"]= 42;
+      Users.getUser(u.original_name, function(user) {
+        dataJS.increment("user_details")
+        res.render('user_details', {user:user, feedback:feedback, title:"update"});
+      })
   }
 
   if (u.original_name != u.name) {
     Users.getUser(u.name, function(user) {
       if (user.name == "notarealuser") {
         Users.getUser(u.original_name, function(original_user) {
-          // console.log(original_user);
           var date = Users.returnDate();
           var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
           Users.updateUser(u.original_name, user_array, function(){
-              res.status(200);
-            res.setHeader('Content-Type', 'text/html')
+            u.creation = user_array[10]
+            u.update = user_array[11]
             dataJS.increment("user_details")
             res.render('user_details', {user:u, feedback:feedback, title:"update"});
           });
         });
       } else {
-           res.status(200);
-            res.setHeader('Content-Type', 'text/html')
             dataJS.increment("user_details")
             u.name=u.original_name;
+            u.creation = user_array[10]
+            u.update = user_array[11]
             res.render('user_details', {user:u, feedback:feedback, title:"update"});
         }
       })
@@ -183,10 +185,10 @@ router.put('/user/:id', function (req, res) {
         var date = Users.returnDate();
         var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
         Users.updateUser(u.original_name, user_array, function(){
-           res.status(200);
-            res.setHeader('Content-Type', 'text/html')
-            dataJS.increment("user_details")
-            res.render('user_details', {user:u, feedback:feedback, title:"update"});
+          u.creation = user_array[10]
+          u.update = user_array[11]
+          dataJS.increment("user_details")
+          res.render('user_details', {user:u, feedback:feedback, title:"update"});
         });
       });
     }
