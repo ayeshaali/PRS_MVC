@@ -161,35 +161,19 @@ router.put('/user/:id', function (req, res) {
           var date = Users.returnDate();
           var user_array = [u.name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
           Users.updateUser(u.original_name, user_array, function(){
-            res.status(200);
-            res.setHeader('Content-Type', 'text/html')
-            Users.getUser(u.name, function(tjret){
-              dataJS.increment("user_details")
-              res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
-            })
+              res.redirect("/user/"+u.name+"/edit");
           });
         });
       } else {
-        Users.getUser(u.original_name, function(tjret){
-          feedback["failure"] = 10;
-          res.status(200);
-          res.setHeader('Content-Type', 'text/html')
-          dataJS.increment("user_details")
-          res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
-        })
-      }
-    });
+          res.redirect("/user/"+u.original_name+"/edit");
+        }
+      })
   } else {
       Users.getUser(u.original_name, function(original_user) {
         var date = Users.returnDate();
         var user_array = [u.original_name, u.pswd, original_user.total, original_user.wins, original_user.losses, original_user.rock, original_user.paper, original_user.scissors, u.first, u.last, original_user.creation, date]
         Users.updateUser(u.original_name, user_array, function(){
-          res.status(200);
-          res.setHeader('Content-Type', 'text/html')
-          Users.getUser(u.original_name, function(tjret) {
-            dataJS.increment("user_details")
-            res.render('user_details', {user:tjret, feedback:feedback, title:"update"});
-          })
+          res.redirect("/user/"+u.original_name+"/edit");
         });
       });
     }
